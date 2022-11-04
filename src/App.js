@@ -1,12 +1,13 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import './custom.scss'
+import { Login } from "./components/login.jsx";
+import { Register } from "./components/register.jsx";
+import "bootstrap/dist/css/bootstrap.css";
+import "./custom.scss";
 
 function App() {
   return (
-    <div className='App vh-100'>
-      <div className='bg-success h-50 d-flex justify-content-center align-items-center'>
-        Testing
-      </div>
+    <div className="App">
+      <Login />
+      {/* <Register /> */}
     </div>
   );
 }
