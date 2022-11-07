@@ -1,7 +1,7 @@
-import { Login } from "./components/login.jsx";
-import { Register } from "./components/register.jsx";
+import React from "react";
+import { Login, Register, FoodTruckCard } from "./components"
 import "bootstrap/dist/css/bootstrap.css";
-import "./custom.scss";
+import "./styles/custom.scss";
 
 function App() {
   return (

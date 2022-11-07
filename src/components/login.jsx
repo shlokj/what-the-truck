@@ -9,7 +9,7 @@ const styles = {
   loginButton: { margin: 16 },
 };
 
-export const Login = () => {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
