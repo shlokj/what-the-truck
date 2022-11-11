@@ -1,19 +1,26 @@
-import { Button, Grid, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
+import {
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  Link,
+} from "@mui/material";
 import ReactDOM from "react-dom/client";
 
 const styles = {
   textInputsVertical: { flexDirection: "column" },
   usernameInput: { flexDirection: "column", margin: 16, width: 300 },
   grid: { width: 300 },
-  loginButton: { margin: 16 },
+  loginButton: { margin: 15 },
 };
 
-export const SignUp = () => {
+export const SignUp = ({ handleChange }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   // const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
@@ -22,7 +29,7 @@ export const SignUp = () => {
     console.log(username);
     console.log(password);
     console.log(email);
-    console.log(retypePassword);
+    console.log(confirmPassword);
   };
 
   //TODO (anmol): validate email
@@ -38,99 +45,92 @@ export const SignUp = () => {
   //   }
   // };
 
-  const paperStyle = {
-    padding: 40,
-    height: "70vh",
-    width: "280",
-    margin: "auto",
-  };
-
   return (
     <>
-      <Grid container style={{ minHeight: "100vh" }}>
-        <Grid item xs={12} sm={6}>
-          <img
-            src="https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            alt="logo and truck images"
+      {/* <Grid container style={{ minHeight: "100vh" }}> */}
+
+      <Paper elevation={10} xs={12} sm={6}>
+        <Grid
+          container
+          direction="column"
+          align="center"
+          bottom-margin="100vh"
+          height="70vh"
+        >
+          <br></br>
+          <br></br>
+
+          <h2 xs={12} sm={6}>
+            Sign Up
+          </h2>
+
+          <TextField
+            id="email"
+            label="Email"
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setEmail(e.target.value)}
+            // onBlur={(e) => checkEmail(e.target.value)}
+            placeholder="Enter your email address"
+            required
           />
-        </Grid>
 
-        <Paper elevation={10} style={paperStyle} xs={12} sm={6}>
-          <Grid container direction="column" align="center">
-            <h2>Sign Up</h2>
-            <TextField
-              id="email"
-              label="Email"
-              variant="outlined"
-              style={styles.usernameInput}
-              onChange={(e) => setEmail(e.target.value)}
-              // onBlur={(e) => checkEmail(e.target.value)}
-              placeholder="Enter your email address"
-              required
-            />
+          <TextField
+            id="username"
+            label="Username"
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
+            required
+          />
+          <TextField
+            id="password"
+            label="Password"
+            tyoe
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="*******"
+            type="password"
+            required
+          />
 
-            <TextField
-              id="username"
-              label="Username"
-              variant="outlined"
-              style={styles.usernameInput}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              required
-            />
-            <TextField
-              id="password"
-              label="Password"
-              tyoe
-              variant="outlined"
-              style={styles.usernameInput}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="*******"
-              type="password"
-              required
-            />
+          <TextField
+            id="confirmPassword"
+            label="Confirm Password"
+            tyoe
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="*******"
+            type="password"
+            required
+            password
+          />
 
-            <TextField
-              id="retypePassword"
-              label="Retype Password"
-              tyoe
-              variant="outlined"
-              style={styles.usernameInput}
-              onChange={(e) => setRetypePassword(e.target.value)}
-              placeholder="*******"
-              type="password"
-              required
-              password
-            />
+          <Grid container justifyContent="center">
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              style={styles.loginButton}
+              fullWidth
+              color="primary"
+            >
+              Sign Up
+            </Button>
 
-            <Grid container direction="row" spacing={2} style={styles.grid}>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  onClick={handleSubmit}
-                  style={styles.loginButton}
-                  fullWidth
-                  color="secondary" //change to gray
-                >
-                  Log in
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  onClick={handleSubmit}
-                  style={styles.loginButton}
-                  fullWidth
-                  color="primary"
-                >
-                  Sign up
-                </Button>
-              </Grid>
+            <Grid item>
+              <Typography>
+                <Link href="#" onClick={() => handleChange("event", 0)}>
+                  I already have an account
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
-        </Paper>
-      </Grid>
+        </Grid>
+      </Paper>
+      {/* </Grid> */}
     </>
   );
 };
