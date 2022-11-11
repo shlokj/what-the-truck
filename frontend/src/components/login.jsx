@@ -1,4 +1,11 @@
-import { Button, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  Link,
+} from "@mui/material";
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 
@@ -9,9 +16,10 @@ const styles = {
   loginButton: { margin: 16 },
 };
 
-export const Login = () => {
+export const Login = ({ handleChange }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     // will be changed later
@@ -20,53 +28,80 @@ export const Login = () => {
     console.log(password);
   };
 
+  //TODO (anmol): validate email
+  // function isValidEmail(email) {
+  //   return /\S+@\S+\.\S+/.test(email);
+  // }
+
+  // const checkEmail = (e) => {
+  //   if (!isValidEmail(e.target.value)) {
+  //     setError("Email is invalid");
+  //   } else {
+  //     setError(null);
+  //   }
+  // };
+
   return (
     <>
-      <Grid container direction="column">
-        <TextField
-          id="username"
-          label="Username"
-          variant="outlined"
-          style={styles.usernameInput}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter your username"
-          required
-        />
-        <TextField
-          id="password"
-          label="Password"
-          tyoe
-          variant="outlined"
-          style={styles.usernameInput}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="*******"
-          type="password"
-          required
-          password
-        />
-      </Grid>
-      <Grid container direction="row" spacing={2} style={styles.grid}>
-        <Grid item xs={6}>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            style={styles.loginButton}
-            fullWidth
-          >
-            Log in
-          </Button>
+      <Paper elevation={10} xs={12} sm={6}>
+        <Grid
+          container
+          direction="column"
+          align="center"
+          // bottom-margin="100vh"
+          height="70vh"
+        >
+          <br></br>
+          <br></br>
+          <Grid item>
+            <h2> Log In </h2>
+          </Grid>
+
+          <br></br>
+          <br></br>
+
+          <TextField
+            id="username"
+            label="Username"
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
+            required
+          />
+          <TextField
+            id="password"
+            label="Password"
+            tyoe
+            variant="outlined"
+            style={styles.usernameInput}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="*******"
+            type="password"
+            required
+          />
+
+          <Grid container justifyContent="center" align="center">
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              style={styles.loginButton}
+              fullWidth
+              color="primary"
+            >
+              Log in
+            </Button>
+
+            <Grid item>
+              <Typography>
+                <Link href="#" onClick={() => handleChange("event", 1)}>
+                  I don't have an account
+                </Link>
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            style={styles.loginButton}
-            fullWidth
-          >
-            Sign up
-          </Button>
-        </Grid>
-      </Grid>
+      </Paper>
     </>
   );
 };
