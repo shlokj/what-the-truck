@@ -14,6 +14,7 @@ const styles = {
   usernameInput: { flexDirection: "column", margin: 16, width: 300 },
   grid: { width: 300 },
   loginButton: { margin: 15 },
+  signUpText: { marginTop: 32 },
 };
 
 export default function SignUp({ handleChange }) {
@@ -32,38 +33,38 @@ export default function SignUp({ handleChange }) {
     console.log(confirmPassword);
   };
 
-  //TODO (anmol): validate email
-  // function isValidEmail(email) {
-  //   return /\S+@\S+\.\S+/.test(email);
-  // }
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
-  // const checkEmail = (e) => {
-  //   if (!isValidEmail(e.target.value)) {
-  //     setError("Email is invalid");
-  //   } else {
-  //     setError(null);
-  //   }
-  // };
+  function checkEmail(e) {
+    if (!isValidEmail(e.target.value)) {
+      return false;
+    }
+    const dom = e.substring(e.indexOf("@") + 1);
+    if (dom.endsWith("ucla.edu")) {
+      return true;
+    }
+    return false;
+  }
 
   return (
     <>
-      {/* <Grid container style={{ minHeight: "100vh" }}> */}
-
-      <Paper elevation={10} xs={12} sm={6}>
+      <Paper
+        elevation={10}
+        xs={12}
+        sm={6}
+        style={{
+          padding: 40,
+        }}
+      >
         <Grid
           container
           direction="column"
           align="center"
           bottom-margin="100vh"
-          height="70vh"
+          height="auto"
         >
-          <br></br>
-          <br></br>
-
-          <h2 xs={12} sm={6}>
-            Sign Up
-          </h2>
-
           <TextField
             id="email"
             label="Email"
@@ -71,6 +72,8 @@ export default function SignUp({ handleChange }) {
             style={styles.usernameInput}
             onChange={(e) => setEmail(e.target.value)}
             // onBlur={(e) => checkEmail(e.target.value)}
+            // error
+            // helperText="Please enter a valid UCLA email."
             placeholder="Enter your email address"
             required
           />
@@ -81,7 +84,9 @@ export default function SignUp({ handleChange }) {
             variant="outlined"
             style={styles.usernameInput}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            // error
+            // helperText="This username is taken."
+            placeholder="Choose a username"
             required
           />
           <TextField
@@ -92,6 +97,8 @@ export default function SignUp({ handleChange }) {
             style={styles.usernameInput}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="*******"
+            // error
+            // helperText="Your password must be at least 8 characters long."
             type="password"
             required
           />
@@ -105,6 +112,8 @@ export default function SignUp({ handleChange }) {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="*******"
             type="password"
+            // error
+            // helperText="Passwords don't match."
             required
             password
           />
@@ -115,7 +124,6 @@ export default function SignUp({ handleChange }) {
               onClick={handleSubmit}
               style={styles.loginButton}
               fullWidth
-              color="primary"
             >
               Sign Up
             </Button>
@@ -130,7 +138,6 @@ export default function SignUp({ handleChange }) {
           </Grid>
         </Grid>
       </Paper>
-      {/* </Grid> */}
     </>
   );
 }

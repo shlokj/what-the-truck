@@ -33,9 +33,8 @@ function TabPanel(props) {
     </div>
   );
 }
+
 const paperStyle = {
-  width: "300",
-  height: "70vh",
   margin: "auto",
 };
 

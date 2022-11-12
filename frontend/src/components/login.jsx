@@ -16,7 +16,7 @@ const styles = {
   loginButton: { margin: 16 },
 };
 
-export default function Login(handleChange) {
+export default function Login({ handleChange }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
@@ -28,38 +28,23 @@ export default function Login(handleChange) {
     console.log(password);
   };
 
-  //TODO (anmol): validate email
-  // function isValidEmail(email) {
-  //   return /\S+@\S+\.\S+/.test(email);
-  // }
-
-  // const checkEmail = (e) => {
-  //   if (!isValidEmail(e.target.value)) {
-  //     setError("Email is invalid");
-  //   } else {
-  //     setError(null);
-  //   }
-  // };
-
   return (
     <>
-      <Paper elevation={10} xs={12} sm={6}>
+      <Paper
+        elevation={10}
+        xs={12}
+        sm={6}
+        style={{
+          padding: 40,
+        }}
+      >
         <Grid
           container
           direction="column"
           align="center"
-          // bottom-margin="100vh"
-          height="70vh"
+          bottom-margin="100vh"
+          height="auto"
         >
-          <br></br>
-          <br></br>
-          <Grid item>
-            <h2> Log In </h2>
-          </Grid>
-
-          <br></br>
-          <br></br>
-
           <TextField
             id="username"
             label="Username"
@@ -87,7 +72,6 @@ export default function Login(handleChange) {
               onClick={handleSubmit}
               style={styles.loginButton}
               fullWidth
-              color="primary"
             >
               Log in
             </Button>
