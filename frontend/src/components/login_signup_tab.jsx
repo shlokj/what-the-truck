@@ -4,8 +4,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Login } from "./login.jsx";
-import { SignUp } from "./signup.jsx";
+import Login from "./login.jsx";
+import SignUp from "./signup.jsx";
 
 function a11yProps(index) {
   return {

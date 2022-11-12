@@ -16,7 +16,7 @@ const styles = {
   loginButton: { margin: 16 },
 };
 
-export const Login = ({ handleChange }) => {
+export default function Login(handleChange) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // const [error, setError] = useState("");
@@ -104,4 +104,4 @@ export const Login = ({ handleChange }) => {
       </Paper>
     </>
   );
-};
+}

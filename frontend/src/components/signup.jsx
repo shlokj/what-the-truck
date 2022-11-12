@@ -16,7 +16,7 @@ const styles = {
   loginButton: { margin: 15 },
 };
 
-export const SignUp = ({ handleChange }) => {
+export default function SignUp({ handleChange }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -133,4 +133,4 @@ export const SignUp = ({ handleChange }) => {
       {/* </Grid> */}
     </>
   );
-};
+}
