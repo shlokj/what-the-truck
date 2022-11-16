@@ -1,5 +1,6 @@
+import React from "react"
 import "bootstrap/dist/css/bootstrap.css";
-import { LoginSignupTab } from "../login_signup_tab.jsx";
+import { LoginSignupTab } from "../components";
 
 const styles = {
   main: { display: "flex", margin: "auto" },
