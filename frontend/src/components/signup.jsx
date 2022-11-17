@@ -72,8 +72,8 @@ export default function SignUp({ handleChange }) {
             style={styles.usernameInput}
             onChange={(e) => setEmail(e.target.value)}
             // onBlur={(e) => checkEmail(e.target.value)}
-            // error
-            // helperText="Please enter a valid UCLA email."
+            error
+            helperText="Please enter a valid UCLA email."
             placeholder="Enter your email address"
             required
           />

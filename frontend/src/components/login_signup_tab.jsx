@@ -48,11 +48,7 @@ export default function LoginSignupTab() {
   return (
     <Grid container style={{ minHeight: "100vh" }}>
       <Grid item xs={12} sm={6}>
-        <img
-          src="https://i.pinimg.com/originals/d9/4a/49/d94a495eca526d82ebbe0640aea413a9.jpg"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          alt="logo and truck images"
-        />
+        <img src="truckLogo.png" alt="truck and logo" />
       </Grid>
       <Grid item style={paperStyle}>
         <Paper elevation={20}>
