@@ -1,13 +1,16 @@
-import "bootstrap/dist/css/bootstrap.css";
-import "./custom.scss";
+import React from "react"
 import { Routes, Route } from "react-router-dom";
-import SignIn from "./components/screens/SignIn";
+import { SignIn, Home } from "./screens";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "./styles/custom.scss"
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </div>
   );

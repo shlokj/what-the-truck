@@ -38,7 +38,7 @@ const paperStyle = {
   margin: "auto",
 };
 
-export const LoginSignupTab = () => {
+export default function LoginSignupTab() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
