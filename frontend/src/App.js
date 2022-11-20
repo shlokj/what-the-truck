@@ -1,11 +1,16 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { SignIn, Home } from "./screens";
 
 import "bootstrap/dist/css/bootstrap.css";
-import "./styles/custom.scss"
+import "./styles/custom.scss";
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/signin");
+  });
+
   return (
     <div>
       <Routes>
