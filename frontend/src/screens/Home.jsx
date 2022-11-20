@@ -13,6 +13,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const placeholderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
 	@@ -15,67 +20,201 @@ Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa
@@ -50,6 +52,7 @@ export default function Home() {
     title.toLowerCase().includes(search.toLowerCase())
   );
 
+  const auth = getAuth();
   console.log(sort, decreasing);
 
   return (
@@ -65,6 +68,10 @@ export default function Home() {
           <Button
             className="px-3 py-2 position-absolute end-0 top-0 m-3 bg-light rounded rounded-2"
             variant="text"
+            onClick={() => {
+              auth.signOut();
+              console.log("signed out");
+            }}
           >
             Logout
           </Button>

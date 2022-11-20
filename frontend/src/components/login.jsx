@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   textInputsVertical: { flexDirection: "column" },
@@ -17,16 +19,36 @@ const styles = {
 };
 
 export default function Login({ handleChange }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
+  const [signInError, setSignInError] = useState(false);
 
-  const handleSubmit = (e) => {
-    // will be changed later
-    e.preventDefault();
-    console.log(username);
-    console.log(password);
-  };
+  const navigate = useNavigate();
+
+  const auth = getAuth();
+
+  function signIn() {
+    console.log("sign in");
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // Signed in
+        setSignInError(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        if (
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        ) {
+          setSignInError(true);
+          return 1;
+        }
+        console.log("Error signing in.");
+        console.error(error);
+        alert("Failed to sign in. Please try again later.");
+        return 1;
+      });
+  }
 
   return (
     <>
@@ -46,30 +68,37 @@ export default function Login({ handleChange }) {
           height="auto"
         >
           <TextField
-            id="username"
-            label="Username"
+            id="email"
+            label="Email"
             variant="outlined"
             style={styles.usernameInput}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Enter your email"
+            error={signInError}
             required
           />
           <TextField
             id="password"
             label="Password"
-            tyoe
             variant="outlined"
             style={styles.usernameInput}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setSignInError(false);
+            }}
             placeholder="*******"
             type="password"
+            error={signInError}
+            helperText={signInError ? "Incorrect email or password." : null}
             required
           />
 
           <Grid container justifyContent="center" align="center">
             <Button
               variant="contained"
-              onClick={handleSubmit}
+              onClick={() => signIn()}
               style={styles.loginButton}
               fullWidth
             >

@@ -46,7 +46,7 @@ export default function SignUp({ handleChange }) {
           alert("That email address is invalid.");
           return 1;
         }
-        console.log("Error sending verification email");
+        console.log("Error signing up user.");
         console.error(error);
         return 1;
       });
