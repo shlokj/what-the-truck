@@ -22,32 +22,55 @@ export default function SignUp({ handleChange }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const handleSubmit = (e) => {
     // will be changed later
     e.preventDefault();
-    console.log(username);
-    console.log(password);
-    console.log(email);
-    console.log(confirmPassword);
+    handleEmail(e);
+    handlePassword(e);
+    handleConfirmPassword(e);
   };
 
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  function checkEmail(e) {
-    if (!isValidEmail(e.target.value)) {
+  const handleEmail = (e) => {
+    if (!isValidEmail(e)) {
+      setEmailError(true);
       return false;
     }
     const dom = e.substring(e.indexOf("@") + 1);
     if (dom.endsWith("ucla.edu")) {
+      setEmailError(false);
       return true;
     }
+    setEmailError(true);
     return false;
-  }
+  };
 
+  const handlePassword = (e) => {
+    if (password && e.length < 8) {
+      setPasswordError(true);
+      return false;
+    } else {
+      setPasswordError(false);
+      return true;
+    }
+  };
+
+  const handleConfirmPassword = (e) => {
+    if (password !== confirmPassword) {
+      setConfirmPasswordError(true);
+      return false;
+    } else {
+      setConfirmPasswordError(false);
+      return true;
+    }
+  };
   return (
     <>
       <Paper
@@ -71,9 +94,9 @@ export default function SignUp({ handleChange }) {
             variant="outlined"
             style={styles.usernameInput}
             onChange={(e) => setEmail(e.target.value)}
-            // onBlur={(e) => checkEmail(e.target.value)}
-            error
-            helperText="Please enter a valid UCLA email."
+            onBlurCapture={(e) => handleEmail(e.target.value)}
+            error={emailError}
+            helperText={emailError ? "Please enter a valid UCLA email." : null}
             placeholder="Enter your email address"
             required
           />
@@ -97,8 +120,11 @@ export default function SignUp({ handleChange }) {
             style={styles.usernameInput}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="*******"
-            // error
-            // helperText="Your password must be at least 8 characters long."
+            onBlurCapture={(e) => handlePassword(e.target.value)}
+            error={passwordError}
+            helperText={
+              passwordError ? "Must be at least 8 characters long." : null
+            }
             type="password"
             required
           />
@@ -112,8 +138,9 @@ export default function SignUp({ handleChange }) {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="*******"
             type="password"
-            // error
-            // helperText="Passwords don't match."
+            onBlurCapture={(e) => handleConfirmPassword(e.target.value)}
+            error={confirmPasswordError}
+            helperText={confirmPasswordError ? "Passwords don't match." : null}
             required
             password
           />
