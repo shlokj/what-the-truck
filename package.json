@@ -10,6 +10,7 @@
     "install": "cd frontend && npm install"
   },
   "dependencies": {
+    "firebase": "^9.14.0",
     "react-scripts": "^5.0.1"
   }
 }

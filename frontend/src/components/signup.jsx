@@ -8,6 +8,7 @@ import {
   Link,
 } from "@mui/material";
 import ReactDOM from "react-dom/client";
+import { getAuth } from "firebase/auth";
 
 const styles = {
   textInputsVertical: { flexDirection: "column" },
@@ -25,6 +26,7 @@ export default function SignUp({ handleChange }) {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const auth = getAuth();
 
   const handleSubmit = (e) => {
     // will be changed later

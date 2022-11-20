@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { SignIn, Home } from "./screens";
-
 import "bootstrap/dist/css/bootstrap.css";
 import "./styles/custom.scss";
 
