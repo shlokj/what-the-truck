@@ -8,7 +8,8 @@ import {
   Link,
 } from "@mui/material";
 import ReactDOM from "react-dom/client";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   textInputsVertical: { flexDirection: "column" },
@@ -24,16 +25,36 @@ export default function SignUp({ handleChange }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const auth = getAuth();
+  const navigate = useNavigate();
+
+  async function addUser(email, password) {
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        // we are signed in
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          alert("That email address is already in use.");
+          return 1;
+        } else if (error.code === "auth/invalid-email") {
+          // we shouldn't reach here since we already have checks in place
+          alert("That email address is invalid.");
+          return 1;
+        }
+        console.log("Error sending verification email");
+        console.error(error);
+        return 1;
+      });
+  }
 
   const handleSubmit = (e) => {
-    // will be changed later
     e.preventDefault();
-    handleEmail(e);
-    handlePassword(e);
-    handleConfirmPassword(e);
+    addUser(email, password);
   };
 
   function isValidEmail(email) {
@@ -41,6 +62,10 @@ export default function SignUp({ handleChange }) {
   }
 
   const handleEmail = (e) => {
+    if (e.length === 0) {
+      setEmailError(false);
+      return true;
+    }
     if (!isValidEmail(e)) {
       setEmailError(true);
       return false;
@@ -73,6 +98,13 @@ export default function SignUp({ handleChange }) {
       return true;
     }
   };
+
+  const anyTextBoxEmpty =
+    username.length === 0 ||
+    email.length === 0 ||
+    password.length === 0 ||
+    confirmPassword.length === 0;
+
   return (
     <>
       <Paper
@@ -152,6 +184,13 @@ export default function SignUp({ handleChange }) {
               variant="contained"
               onClick={handleSubmit}
               style={styles.loginButton}
+              disabled={
+                emailError ||
+                usernameError ||
+                passwordError ||
+                confirmPasswordError ||
+                anyTextBoxEmpty
+              }
               fullWidth
             >
               Sign Up
