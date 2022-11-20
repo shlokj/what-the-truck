@@ -5,11 +5,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./styles/custom.scss";
 
 function App() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate("/signin");
-  });
-
   return (
     <div>
       <Routes>
