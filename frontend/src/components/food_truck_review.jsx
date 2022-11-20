@@ -2,10 +2,12 @@ import { Stack, Button, Rating, TextField } from "@mui/material";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { fontFamily } from "@mui/system";
 import { ClassNames } from "@emotion/react";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 // TODO: change write your review customized to food truck page -> Line 17
 
 export default function ReviewInput() {
+  const [reviewText, setReviewText] = useState("");
+
   return (
     <Stack spacing={5}>
       <Stack direction="column" spacing={1}>
@@ -27,6 +29,7 @@ export default function ReviewInput() {
               floatingLabelText="MultiLine and FloatingLabel"
               multiline
               rows={5}
+              onChange={(e) => setReviewText(e.target.value)}
             />
           </div>
           <div className="descriptors">
