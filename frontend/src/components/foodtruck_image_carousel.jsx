@@ -22,7 +22,7 @@ export default function ImageCarousel() {
           className="w-full h-[440px] object-cover"
           width="100%"
           height="500 px"
-          src="creamyboyslogo.png"
+          src="../creamyboyslogo.png"
           alt="creamy boys logo"
         />
       </Grid>
