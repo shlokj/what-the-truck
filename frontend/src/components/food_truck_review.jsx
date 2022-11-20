@@ -1,8 +1,5 @@
 import { Stack, Button, Rating, TextField } from "@mui/material";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { fontFamily } from "@mui/system";
-import { ClassNames } from "@emotion/react";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 // TODO: change write your review customized to food truck page -> Line 17
 
 export default function ReviewInput() {
