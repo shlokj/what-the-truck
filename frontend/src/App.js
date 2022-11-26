@@ -24,8 +24,11 @@ function App() {
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Home />} />
-        <Route path="/reviewFoodTruck" element={<ReviewFoodTruck />} />
         <Route path="/truck/:foodTruckName" element={<FoodtruckPage />} />
+        <Route
+          path="/truck/:foodTruckName/review"
+          element={<ReviewFoodTruck />}
+        />
       </Routes>
     </div>
   );
