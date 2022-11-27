@@ -4,6 +4,7 @@ import SignUp from "./signup";
 import FoodTruckCard from "./food_truck_card";
 import ReviewInput from "./food_truck_review";
 import ImageCarousel from "./foodtruck_image_carousel";
+import ReviewsList from "./foodtruck_review_list";
 
 export {
   LoginSignupTab,
@@ -12,4 +13,5 @@ export {
   FoodTruckCard,
   ReviewInput,
   ImageCarousel,
+  ReviewsList,
 };
