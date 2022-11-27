@@ -10,6 +10,9 @@ import {
 import ReactDOM from "react-dom/client";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { firebaseApp } from "..";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { db } from "..";
 
 const styles = {
   textInputsVertical: { flexDirection: "column" },
@@ -31,10 +34,22 @@ export default function SignUp({ handleChange }) {
   const auth = getAuth();
   const navigate = useNavigate();
 
-  async function addUser(email, password) {
+  async function addUser(email, password, username) {
+
+    const dbRef = collection(db, "Users");
+
+    const data = {
+      Email: email,
+      Password: password,
+      Username: username
+    };
+
+    await addDoc(dbRef, data);
+    
     await createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         // we are signed in
+       
         navigate("/");
       })
       .catch((error) => {
@@ -54,7 +69,8 @@ export default function SignUp({ handleChange }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addUser(email, password);
+    addUser(email, password, username);
+    
   };
 
   function isValidEmail(email) {

@@ -4,7 +4,7 @@ import { ImageCarousel } from "../components";
 import { useParams } from "react-router-dom";
 
 export default function FoodtruckPage() {
-  const foodTruckName = useParams()
+   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
     .toLowerCase();
 
