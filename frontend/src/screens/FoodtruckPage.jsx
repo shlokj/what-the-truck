@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import "bootstrap/dist/css/bootstrap.css";
+// import { Image } from "mui-image";
 import { ImageCarousel } from "../components";
 import { useParams } from "react-router-dom";
 
@@ -17,13 +18,15 @@ export default function FoodtruckPage() {
   return (
     <>
       <Grid container>
-        <img
-          className="w-full h-[440px] object-cover"
-          width="100%"
-          height="500 px"
-          src="../../creamyboyslogo.png"
-          alt="creamy boys logo"
-        />
+        <Grid item width="100%">
+          <img
+            width="100%"
+            height="500 px"
+            // max-height="250 px"
+            src="../../creamyboyslogo.jpeg"
+            alt="creamy boys logo"
+          />
+        </Grid>
         <Grid item width="100%">
           <div className="ImageCarousel">
             <ImageCarousel />
@@ -39,7 +42,7 @@ export default function FoodtruckPage() {
           >
             <Button variant="outlined">Review this Foodtruck</Button>
             <Box>
-              <Typography component="legend">Rate this Food Truck</Typography>
+              <Typography component="legend">Average Rating</Typography>
               <Rating
                 name="simple-controlled"
                 value={value}

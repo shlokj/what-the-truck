@@ -56,7 +56,7 @@
 // }
 
 import React, { useState } from "react";
-import Magnifier from "./Magnifier";
+// import Magnifier from "./Magnifier";
 import "./slider.scss";
 
 const SNAP_DIST = 12.5;
@@ -151,7 +151,7 @@ export default function ImageCarousel() {
                   setAnchor(x);
                 }}
               >
-                <Magnifier src={item} visible={lg} />
+                {/* <Magnifier src={item} visible={lg} /> */}
               </div>
             </div>
           )

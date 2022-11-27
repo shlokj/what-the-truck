@@ -32,7 +32,7 @@ function Magnifier({ src, visible }) {
           const target = e.currentTarget;
           const { width, height } = target.getBoundingClientRect();
           setSize([width, height]);
-          setShowMagnifier(true);
+          setShowMagnifier(false);
         }}
         onMouseMove={(e) => {
           // gets mouse's position relative to edges of bounding image
