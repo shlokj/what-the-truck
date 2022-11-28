@@ -91,10 +91,16 @@ lunchTrucks=correctList(lunchTrucks)
 dinnerTrucks=correctList(dinnerTrucks)
 extendedTrucks=correctList(extendedTrucks)
 
+print(lunchTrucks)
+print(dinnerTrucks)
+
+print(extendedTrucks)
+
+
 
 
 #firebase connection
-cred = credentials.Certificate("servKey.json")
+cred = credentials.Certificate("../servKey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -106,13 +112,16 @@ for doc in docs:
 
 
 for i in lunchTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Lunch'})
+    j = i.replace("'","")
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch'})
 
 for i in dinnerTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Dinner'})
+    j = i.replace("'","")
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner'})
 
 for i in extendedTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Extended Dinner'})
+    j = i.replace("'","")
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner'})
 
 
 
