@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import { ImageCarousel } from "../components";
 import { useParams } from "react-router-dom";
 
+export let foodTruckName="Fuckoff";
+
 export default function FoodtruckPage() {
    const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -14,3 +16,5 @@ export default function FoodtruckPage() {
     </div>
   );
 }
+
+

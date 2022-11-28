@@ -1,16 +1,50 @@
 import { Stack, Button, Rating, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "..";
+import { useParams } from "react-router-dom";
+
+
 // TODO: change write your review customized to food truck page -> Line 17
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
 
+  const foodTruckName = useParams()
+    .foodTruckName.replace(/[^A-Za-z0-9]/g, "");
+
+    // console.log(foodTruckName);
+
 
 
   async function addReview(reviewText) {
-    const dbRef = collection(db, "Reviews");
+    const dbRef = collection(db, "Trucks");
+    const snapshots = await getDocs(dbRef);
+
+    
+
+    const cityRef = db.collection('Trucks').doc(foodTruckName);
+    const doc = await cityRef.get();
+    if (!doc.exists) {
+      console.log('No such document!');
+    } else {
+      console.log('Document data:', doc.data());
+    }
+
+
+    // var arrayLength = snapshots.length;
+    // for (var i = 0; i < arrayLength; i++) {
+    //   if (foodTruckName===(snapshots[i].data().Name)){
+    //     let docId = snapshots[i].id;
+    //     console.log(docId);
+    //   }
+    // //Do something
+    // }
+
+    
+
+    
+
 
     const data = {
       Body: reviewText
