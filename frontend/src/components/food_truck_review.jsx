@@ -1,6 +1,6 @@
 import { Stack, Button, Rating, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 
@@ -19,17 +19,43 @@ export default function ReviewInput() {
 
   async function addReview(reviewText) {
     const dbRef = collection(db, "Trucks");
-    const snapshots = await getDocs(dbRef);
+
+    const q = query(dbRef, where("Name","==",foodTruckName));
+    
+    onSnapshot(q, (snapshot) => {
+      let books = []
+      snapshot.docs.forEach(doc => {
+        books.push({ ...doc.data(), id: doc.id })
+      })
+      console.log(books[0])
+      
+    })
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const snapshots = await getDocs(dbRef);
 
     
 
-    const cityRef = db.collection('Trucks').doc(foodTruckName);
-    const doc = await cityRef.get();
-    if (!doc.exists) {
-      console.log('No such document!');
-    } else {
-      console.log('Document data:', doc.data());
-    }
+    // const cityRef = doc(db, "Trucks", foodTruckName);
+    // const doc = await cityRef.get();
+    // if (!doc.exists) {
+    //   console.log('No such document!');
+    // } else {
+    //   console.log('Document data:', doc.data());
+    
 
 
     // var arrayLength = snapshots.length;
@@ -46,11 +72,11 @@ export default function ReviewInput() {
     
 
 
-    const data = {
-      Body: reviewText
-    };
+  //   const data = {
+  //     Body: reviewText
+  //   };
 
-    await addDoc(dbRef, data);
+  //   await addDoc(dbRef, data);
 
   }
 
