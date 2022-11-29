@@ -1,6 +1,6 @@
 import { Stack, Button, Rating, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { getFirestore, collection, collectionGroup, onSnapshot, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
+import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 
