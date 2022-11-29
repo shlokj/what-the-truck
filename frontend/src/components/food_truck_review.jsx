@@ -5,6 +5,8 @@ import React, { useState } from "react";
 const styles = {
   heading: { 
     margin: 32,
+    marginTop: 50,
+    marginBottom: 20
   },
 
   fileUpload: {
@@ -14,10 +16,11 @@ const styles = {
     marginLeft: 120,
   },
 
-  paper: 
-  { paddingTop: 32, 
+  paper: { 
+    paddingTop: 32, 
     paddingLeft: "25%", 
-    align: "center" 
+    align: "center",
+    borderRadius: 40
   },
 
   button: {
@@ -27,7 +30,6 @@ const styles = {
 
   textField: {
     marginTop: 32, 
-    marginBottom: 14, 
     marginLeft: 150,
     marginRight: 150,
     width: 400,
@@ -39,6 +41,15 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '30px',
     margin: '0px',
+  },
+
+  reviewCard: {
+    alignItems: 'center',
+    borderRadius: 50,
+    width: 700,
+    margin: 'auto',
+    marginTop: 50,
+    marginBottom: 50
   },
 
   descriptors: {
@@ -57,7 +68,7 @@ export default function ReviewInput() {
       <Stack spacing={5}>
         <Paper elevation={20}>
           <Stack direction="column" spacing={1}>
-            <div className="reviewCard">
+            <div className="reviewCard" style={styles.reviewCard}>
               <div className="title">
                 <h1 align="center">Write a review here!</h1>
               </div>
