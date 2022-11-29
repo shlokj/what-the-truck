@@ -15,6 +15,26 @@ export default function ReviewInput() {
 
     console.log(foodTruckName);
 
+    let temp = "";
+
+    for (let i = 0; i < foodTruckName.length; i++) {
+      let ch = foodTruckName[i];
+      if (ch !== ch.toUpperCase()) {
+        temp += ch;
+    } else {
+      if (i!==0){
+        temp += " ";
+        temp += ch;
+      } else {
+        temp += ch;
+      }
+    }
+  }
+
+    console.log(temp);
+  
+  
+
 
   async function addReview(reviewText) {
     // const dbRef = collection(db, "Trucks");
@@ -32,7 +52,7 @@ export default function ReviewInput() {
       
     // })
 
-    const docRef = doc(db, "Trucks", foodTruckName);
+    const docRef = doc(db, "Trucks", temp);
     const colRef = collection(docRef, "Reviews");
 
     await addDoc(colRef, {
