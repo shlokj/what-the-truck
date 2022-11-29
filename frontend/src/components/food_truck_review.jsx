@@ -1,6 +1,6 @@
 import { Stack, Button, Rating, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { getFirestore, collection, onSnapshot, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
+import { getFirestore, collection, collectionGroup, onSnapshot, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 
@@ -13,37 +13,37 @@ export default function ReviewInput() {
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "");
 
-    // console.log(foodTruckName);
-
+    console.log(foodTruckName);
 
 
   async function addReview(reviewText) {
-    const dbRef = collection(db, "Trucks");
+    // const dbRef = collection(db, "Trucks");
 
-    const q = query(dbRef, where("Name","==",foodTruckName));
+    // const q = query(dbRef, where("Name","==",foodTruckName));
     
-    onSnapshot(q, (snapshot) => {
-      let books = []
-      snapshot.docs.forEach(doc => {
-        books.push({ ...doc.data(), id: doc.id })
-      })
-      console.log(books[0])
+    // onSnapshot(q, (snapshot) => {
+    //   let books = []
+    //   snapshot.docs.forEach(doc => {
+    //     books.push({ ...doc.data(), id: doc.id })
+    //   })
+    //   console.log(books[0]);
+
+    //   // addDoc(reqCollection, reviewText);
       
+    // })
+
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+
+    await addDoc(colRef, {
+      text: reviewText
     })
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
+      .then(() => {
+        console.log("CREATED");
+      })
+      .catch((err) => {
+        console.error("Error creating document", err);
+      });
 
     // const snapshots = await getDocs(dbRef);
 
@@ -58,12 +58,11 @@ export default function ReviewInput() {
     
 
 
-    // var arrayLength = snapshots.length;
+    // var arrayLength = allReviews.length;
     // for (var i = 0; i < arrayLength; i++) {
-    //   if (foodTruckName===(snapshots[i].data().Name)){
-    //     let docId = snapshots[i].id;
-    //     console.log(docId);
-    //   }
+  
+    //     console.log(allReviews[i].data());
+      
     // //Do something
     // }
 
