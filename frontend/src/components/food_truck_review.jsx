@@ -5,8 +5,6 @@ import { db } from "..";
 import { useParams } from "react-router-dom";
 
 
-// TODO: change write your review customized to food truck page -> Line 17
-
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
 
@@ -30,27 +28,8 @@ export default function ReviewInput() {
       }
     }
   }
-
-    console.log(temp);
   
-  
-
-
   async function addReview(reviewText) {
-    // const dbRef = collection(db, "Trucks");
-
-    // const q = query(dbRef, where("Name","==",foodTruckName));
-    
-    // onSnapshot(q, (snapshot) => {
-    //   let books = []
-    //   snapshot.docs.forEach(doc => {
-    //     books.push({ ...doc.data(), id: doc.id })
-    //   })
-    //   console.log(books[0]);
-
-    //   // addDoc(reqCollection, reviewText);
-      
-    // })
 
     const docRef = doc(db, "Trucks", temp);
     const colRef = collection(docRef, "Reviews");
@@ -64,39 +43,6 @@ export default function ReviewInput() {
       .catch((err) => {
         console.error("Error creating document", err);
       });
-
-    // const snapshots = await getDocs(dbRef);
-
-    
-
-    // const cityRef = doc(db, "Trucks", foodTruckName);
-    // const doc = await cityRef.get();
-    // if (!doc.exists) {
-    //   console.log('No such document!');
-    // } else {
-    //   console.log('Document data:', doc.data());
-    
-
-
-    // var arrayLength = allReviews.length;
-    // for (var i = 0; i < arrayLength; i++) {
-  
-    //     console.log(allReviews[i].data());
-      
-    // //Do something
-    // }
-
-    
-
-    
-
-
-  //   const data = {
-  //     Body: reviewText
-  //   };
-
-  //   await addDoc(dbRef, data);
-
   }
 
 
