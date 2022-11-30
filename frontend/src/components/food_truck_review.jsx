@@ -66,6 +66,7 @@ const styles = {
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(0);
   const CHARACTER_LIMIT = 200;
 
   const [imageFile, setImageFile] = useState(null);
@@ -84,6 +85,7 @@ export default function ReviewInput() {
   function uploadImageAndAddReview() {
     if (!imageFile) {
       alert("Please choose an image first.");
+      return;
     }
 
     const imagesRef = ref(storage, `/images/${imageFile.name}`);
@@ -127,12 +129,13 @@ export default function ReviewInput() {
     }
   }
 
-  async function addReview(text, reviewImage) {
+  async function addReview(text, rating, reviewImage) {
     const docRef = doc(db, "Trucks", foodTruckName);
     const colRef = collection(docRef, "Reviews");
 
     await addDoc(colRef, {
       text,
+      rating,
       reviewImage,
     })
       .then(() => {
@@ -145,13 +148,13 @@ export default function ReviewInput() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (reviewText.length === 0) {
+    if (reviewText.length === 0 || rating === 0) {
       return;
     }
     if (imageFile != null) {
       uploadImageAndAddReview();
     } else {
-      addReview(reviewText, null);
+      addReview(reviewText, rating, null);
     }
   };
 
@@ -207,7 +210,13 @@ export default function ReviewInput() {
                   Rate the food truck out of 5 stars
                 </h3>
                 <div align="center">
-                  <Rating size="large"></Rating>
+                  <Rating
+                    size="large"
+                    value={rating}
+                    onChange={(event, newValue) => {
+                      setRating(newValue);
+                    }}
+                  />
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
