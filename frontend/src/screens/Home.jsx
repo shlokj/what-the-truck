@@ -18,11 +18,11 @@ import { useNavigate } from "react-router-dom";
 
 const column = {
   paddingTop: 10,
-  fontFamily: 'Verdana',
+  fontFamily: "Verdana",
 };
 
 const fontstyle = {
-  fontFamily: 'Verdana'
+  fontFamily: "Verdana",
 };
 
 const image = {
@@ -214,16 +214,20 @@ export default function Home() {
       </div>
 
       <div className="w-100 h-100 bg-primary d-flex justify-content-between">
-        <div className="w-50 info d-flex flex-column align-items-center" style={column}>
+        <div
+          className="w-50 info d-flex flex-column align-items-center"
+          style={column}
+        >
           <h4>what the truck - ucla's food truck page</h4>
           <div className="align-items-left" style={image}>
-            <img src="logo.jpeg">
-            </img>
-          </div> 
-
+            <img src="logo.jpeg"></img>
+          </div>
         </div>
         <div style={column}>
-          <div> <h4>contact us at the following: </h4></div>
+          <div>
+            {" "}
+            <h4>contact us at the following: </h4>
+          </div>
           <div align="left">
             <li>shlokj@g.ucla.edu</li>
             <li>skath@g.ucla.edu</li>
@@ -232,15 +236,13 @@ export default function Home() {
             <li>ryanswkim2003@gmail.com</li>
           </div>
         </div>
-       
-       <div className="w-25 locations d-flex flex-column justify-content-between align-items-center">
+
+        <div className="w-25 locations d-flex flex-column justify-content-between align-items-center">
           {[1, 2, 3, 4, 5].map((_) => (
             <p>Filler</p>
           ))}
         </div>
       </div>
-
-    
     </div>
   );
 }
