@@ -18,11 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 const column = {
   paddingTop: 10,
-  fontFamily: 'Verdana',
-};
-
-const fontstyle = {
-  fontFamily: 'Verdana'
+  fontWeight: '50px',
 };
 
 const image = {
@@ -72,8 +68,8 @@ export default function Home() {
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
       <div className="bg-primary w-100 d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
         <div className="w-100 d-flex justify-content-around">
-          <div className="d-flex justify-content-between align-items-center gap-2">
-            <div style={fontstyle}>
+          <div className="d-flex text-white font-weight-bold justify-content-between align-items-center gap-2">
+            <div>
               <h1>what the tr*ck</h1>
             </div>
           </div>
@@ -88,10 +84,10 @@ export default function Home() {
             Logout
           </Button>
         </div>
-        <div>
+        <div className="text-white">
           ____________________________________________________________________________________{" "}
         </div>
-        <div className="title" style={fontstyle}>
+        <div className="text-white">
           <h4>the ucla food truck review website</h4>
         </div>
       </div>
@@ -214,7 +210,7 @@ export default function Home() {
       </div>
 
       <div className="w-100 h-100 bg-primary d-flex justify-content-between">
-        <div className="w-50 info d-flex flex-column align-items-center" style={column}>
+        <div className="w-50 info text-white font-weight-bold d-flex flex-column align-items-center" style={column}>
           <h4>what the truck - ucla's food truck page</h4>
           <div className="align-items-left" style={image}>
             <img src="logo.jpeg">
@@ -222,7 +218,7 @@ export default function Home() {
           </div> 
 
         </div>
-        <div style={column}>
+        <div style={column} className="text-white">
           <div> <h4>contact us at the following: </h4></div>
           <div align="left">
             <li>shlokj@g.ucla.edu</li>
