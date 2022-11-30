@@ -1,0 +1,82 @@
+html, body {
+    overflow: hidden;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.App {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slide {
+    position: relative;
+    min-width: 50%;
+    height: 80%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container {
+    position: relative;
+    width: 88%;
+    border-radius: 5%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttons{
+    width: 90%;
+    height: 7.5%;
+    margin-top: 2%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-lg > input {
+    width: 5%;
+    margin: 0 0.5%;
+    border-radius: 25%;
+}
+
+.buttons-small > input {
+    height: 12px;
+    width: 12px;
+    
+    margin: 0 0.5%;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.shift-btn {
+    background-color: white;
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.carousel-container {
+    display: flex;
+    flex-direction: row;
+}
