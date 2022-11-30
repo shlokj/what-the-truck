@@ -1,15 +1,22 @@
-import { Stack, Button, Rating, TextField, Paper, Grid, autocompleteClasses } from "@mui/material";
+import {
+  Stack,
+  Button,
+  Rating,
+  TextField,
+  Paper,
+  Grid,
+  autocompleteClasses,
+} from "@mui/material";
 import React, { useState } from "react";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 
-
 const styles = {
-  heading: { 
+  heading: {
     margin: 32,
     marginTop: 50,
-    marginBottom: 20
+    marginBottom: 20,
   },
 
   fileUpload: {
@@ -19,69 +26,64 @@ const styles = {
     marginLeft: 120,
   },
 
-  paper: { 
-    paddingTop: 32, 
-    paddingLeft: "25%", 
+  paper: {
+    paddingTop: 32,
+    paddingLeft: "25%",
     align: "center",
-    borderRadius: 40
+    borderRadius: 40,
   },
 
   button: {
-    paddingTop: '40px',
-    paddingBottom: '30px'
+    paddingTop: "40px",
+    paddingBottom: "30px",
   },
 
   textField: {
-    marginTop: 32, 
-    marginLeft: 150,
-    marginRight: 150,
+    marginTop: 32,
     align: "center",
     width: 400,
-    textAlign: 'left',
-    fontFamily:'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
+    textAlign: "left",
+    fontFamily: "Cambria, Cochin, Georgia, Times, Times New Roman, serif",
   },
 
   title: {
-    fontWeight: 'bold',
-    fontSize: '30px',
-    margin: '0px',
+    fontWeight: "bold",
+    fontSize: "30px",
+    margin: "0px",
   },
 
   reviewCard: {
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 50,
     width: 700,
-    margin: 'auto',
+    margin: "auto",
     marginTop: 50,
-    marginBottom: 50
+    marginBottom: 50,
   },
 
   descriptors: {
-    fontWeight: 'lighter',
-    textAlign: 'center',
-    margin: 'auto',
+    fontWeight: "lighter",
+    textAlign: "center",
+    margin: "auto",
     marginTop: 20,
-  }
-
+  },
 };
-
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
 
-  const foodTruckName = useParams()
-    .foodTruckName.replace(/[^A-Za-z0-9]/g, "");
+  const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "");
 
-    console.log(foodTruckName);
+  console.log(foodTruckName);
 
-    let temp = "";
+  let temp = "";
 
-    for (let i = 0; i < foodTruckName.length; i++) {
-      let ch = foodTruckName[i];
-      if (ch !== ch.toUpperCase()) {
-        temp += ch;
+  for (let i = 0; i < foodTruckName.length; i++) {
+    let ch = foodTruckName[i];
+    if (ch !== ch.toUpperCase()) {
+      temp += ch;
     } else {
-      if (i!==0){
+      if (i !== 0) {
         temp += " ";
         temp += ch;
       } else {
@@ -89,14 +91,13 @@ export default function ReviewInput() {
       }
     }
   }
-  
-  async function addReview(reviewText) {
 
+  async function addReview(reviewText) {
     const docRef = doc(db, "Trucks", temp);
     const colRef = collection(docRef, "Reviews");
 
     await addDoc(colRef, {
-      text: reviewText
+      text: reviewText,
     })
       .then(() => {
         console.log("CREATED");
@@ -106,13 +107,10 @@ export default function ReviewInput() {
       });
   }
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     addReview(reviewText);
-    
   };
-
 
   return (
     <Grid container style={styles.paper}>
@@ -140,7 +138,9 @@ export default function ReviewInput() {
                 />
               </div>
               <div className="descriptors">
-                <h3 style={styles.heading} align="center">Upload an image</h3>
+                <h3 style={styles.heading} align="center">
+                  Upload an image
+                </h3>
               </div>
 
               <form
@@ -161,11 +161,9 @@ export default function ReviewInput() {
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
-                <Button 
-                  variant="contained"
-                  onClick={handleSubmit}
-                  >
-                    Submit Review</Button>
+                <Button variant="contained" onClick={handleSubmit}>
+                  Submit Review
+                </Button>
               </div>
             </div>
           </Stack>
