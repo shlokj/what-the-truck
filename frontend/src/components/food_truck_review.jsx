@@ -1,12 +1,16 @@
-import { Stack, Button, Rating, TextField, Paper, Grid, autocompleteClasses } from "@mui/material";
+import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
 import React, { useState } from "react";
-// TODO: change write your review customized to food truck page -> Line 17
+import { collection, addDoc, doc } from "firebase/firestore";
+import { db } from "..";
+import { useParams } from "react-router-dom";
+import { storage } from "..";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const styles = {
-  heading: { 
+  heading: {
     margin: 32,
     marginTop: 50,
-    marginBottom: 20
+    marginBottom: 20,
   },
 
   fileUpload: {
@@ -16,53 +20,140 @@ const styles = {
     marginLeft: 120,
   },
 
-  paper: { 
-    paddingTop: 32, 
-    paddingLeft: "25%", 
+  paper: {
+    paddingTop: 32,
+    paddingLeft: "25%",
     align: "center",
-    borderRadius: 40
+    borderRadius: 40,
   },
 
   button: {
-    paddingTop: '40px',
-    paddingBottom: '30px'
+    paddingTop: "40px",
+    paddingBottom: "30px",
   },
 
   textField: {
-    marginTop: 32, 
+    marginTop: 32,
     marginLeft: 150,
     marginRight: 150,
     width: 400,
-    textAlign: 'left',
-    fontFamily:'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
+    textAlign: "left",
+    fontFamily: "Cambria, Cochin, Georgia, Times, Times New Roman, serif",
   },
 
   title: {
-    fontWeight: 'bold',
-    fontSize: '30px',
-    margin: '0px',
+    fontWeight: "bold",
+    fontSize: "30px",
+    margin: "0px",
   },
 
   reviewCard: {
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 50,
     width: 700,
-    margin: 'auto',
+    margin: "auto",
     marginTop: 50,
-    marginBottom: 50
+    marginBottom: 50,
   },
 
   descriptors: {
-    fontWeight: 'lighter',
-    textAlign: 'center',
-    margin: 'auto',
+    fontWeight: "lighter",
+    textAlign: "center",
+    margin: "auto",
     marginTop: 20,
-  }
-
+  },
 };
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
+  const CHARACTER_LIMIT = 200;
+
+  const [imageFile, setImageFile] = useState(null);
+  const [fileUploadPercent, setFileUploadPercent] = useState(0);
+
+  // console.log(imageFile.name);
+
+  const foodTruckName = useParams()
+    .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
+    .toLowerCase();
+
+  function handleFileSelect(event) {
+    setImageFile(event.target.files[0]);
+  }
+
+  function uploadImageAndAddReview() {
+    if (!imageFile) {
+      alert("Please choose an image first.");
+    }
+
+    const imagesRef = ref(storage, `/images/${imageFile.name}`);
+
+    const uploadTask = uploadBytesResumable(imagesRef, imageFile);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setFileUploadPercent(percent);
+      },
+      (error) => {
+        console.log(error);
+        alert("Failed to upload image. Please try again later.");
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          addReview(reviewText, downloadURL);
+        });
+      }
+    );
+  }
+
+  let temp = "";
+
+  for (let i = 0; i < foodTruckName.length; i++) {
+    let ch = foodTruckName[i];
+    if (ch !== ch.toUpperCase()) {
+      temp += ch;
+    } else {
+      if (i !== 0) {
+        temp += " ";
+        temp += ch;
+      } else {
+        temp += ch;
+      }
+    }
+  }
+
+  async function addReview(text, reviewImage) {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+
+    await addDoc(colRef, {
+      text,
+      reviewImage,
+    })
+      .then(() => {
+        console.log("CREATED");
+      })
+      .catch((err) => {
+        console.error("Error creating document", err);
+      });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (reviewText.length === 0) {
+      return;
+    }
+    if (imageFile != null) {
+      uploadImageAndAddReview();
+    } else {
+      addReview(reviewText, null);
+    }
+  };
 
   return (
     <Grid container style={styles.paper}>
@@ -84,12 +175,18 @@ export default function ReviewInput() {
                   hintText="Message Field"
                   floatingLabelText="MultiLine and FloatingLabel"
                   multiline
-                  rows={8}
+                  rows={7}
+                  inputProps={{
+                    maxLength: CHARACTER_LIMIT,
+                  }}
                   onChange={(e) => setReviewText(e.target.value)}
+                  helperText={`${reviewText.length}/${CHARACTER_LIMIT}`}
                 />
               </div>
               <div className="descriptors">
-                <h3 style={styles.heading} align="center">Upload an image</h3>
+                <h3 style={styles.heading} align="center">
+                  Upload an image
+                </h3>
               </div>
 
               <form
@@ -98,7 +195,11 @@ export default function ReviewInput() {
                 method="post"
                 style={styles.fileUpload}
               >
-                <input type="file" name="file1" id="file1" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                />
               </form>
 
               <div className="descriptors">
@@ -110,7 +211,9 @@ export default function ReviewInput() {
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
-                <Button variant="contained">Submit Review</Button>
+                <Button variant="contained" onClick={handleSubmit}>
+                  Submit Review
+                </Button>
               </div>
             </div>
           </Stack>
