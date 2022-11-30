@@ -1,5 +1,8 @@
 import { Stack, Button, Rating, TextField, Paper, Grid, autocompleteClasses } from "@mui/material";
 import React, { useState } from "react";
+import { collection, addDoc, doc } from "firebase/firestore";
+import { db } from "..";
+import { useParams } from "react-router-dom";
 // TODO: change write your review customized to food truck page -> Line 17
 
 const styles = {
@@ -64,6 +67,48 @@ const styles = {
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
 
+  const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "");
+
+  console.log(foodTruckName);
+
+  let temp = "";
+
+  for (let i = 0; i < foodTruckName.length; i++) {
+    let ch = foodTruckName[i];
+    if (ch !== ch.toUpperCase()) {
+      temp += ch;
+    } else {
+      if (i !== 0) {
+        temp += " ";
+        temp += ch;
+      } else {
+        temp += ch;
+      }
+    }
+  }
+
+  async function addReview(reviewText) {
+    const docRef = doc(db, "Trucks", temp);
+    const colRef = collection(docRef, "Reviews");
+
+    await addDoc(colRef, {
+      text: reviewText,
+    })
+      .then(() => {
+        console.log("CREATED");
+      })
+      .catch((err) => {
+        console.error("Error creating document", err);
+      });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addReview(reviewText);
+  };
+
+
+
   return (
     <Grid container style={styles.paper}>
       <Stack spacing={5}>
@@ -110,7 +155,7 @@ export default function ReviewInput() {
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
-                <Button variant="contained">Submit Review</Button>
+                <Button variant="contained" onClick = {handleSubmit}>Submit Review</Button>
               </div>
             </div>
           </Stack>
