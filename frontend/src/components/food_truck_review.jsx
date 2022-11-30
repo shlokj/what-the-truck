@@ -66,28 +66,11 @@ const styles = {
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
 
-  const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "");
+  const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
 
-  console.log(foodTruckName);
-
-  let temp = "";
-
-  for (let i = 0; i < foodTruckName.length; i++) {
-    let ch = foodTruckName[i];
-    if (ch !== ch.toUpperCase()) {
-      temp += ch;
-    } else {
-      if (i !== 0) {
-        temp += " ";
-        temp += ch;
-      } else {
-        temp += ch;
-      }
-    }
-  }
 
   async function addReview(reviewText) {
-    const docRef = doc(db, "Trucks", temp);
+    const docRef = doc(db, "Trucks", foodTruckName);
     const colRef = collection(docRef, "Reviews");
 
     await addDoc(colRef, {
