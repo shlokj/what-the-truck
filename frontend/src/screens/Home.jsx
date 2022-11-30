@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "../styles/custom.scss";
-import { FoodTruckCard } from "../components";
+
 import {
   Button,
-  Link,
-  TextField,
   FormControl,
   OutlinedInput,
   Radio,
@@ -14,15 +10,17 @@ import {
   Checkbox,
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.css";
+import { FoodTruckCard } from "../components";
 
 const column = {
   paddingTop: 10,
-  fontWeight: '50px'
+  fontWeight: "50px",
 };
 
 const fontstyle = {
-  fontWeight: '50px'
+  fontWeight: "50px",
 };
 
 const image = {
@@ -70,20 +68,21 @@ export default function Home() {
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
-      <div className="bg-primary text-white w-100 font-weight-bold
-       d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
+      <div
+        className="bg-primary text-white w-100 font-weight-bold
+       d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3"
+      >
         <div className="w-100 d-flex justify-content-around">
           <div className="d-flex justify-content-between align-items-center gap-2">
             <div>
-              <img src="/public/truckLogo.png">
-              </img>
+              <img src="/public/truckLogo.png"></img>
             </div>
             <div style={fontstyle}>
-              <h1>what the tr*ck</h1>
+              <h1>What the Truck</h1>
             </div>
           </div>
           <Button
-            className="px-3 py-2 position-absolute end-0 top-0 m-3 bg-light rounded rounded-2"
+            className="px-3 py-2 position-absolute end-0 top-0 m-2 me-4 bg-light rounded rounded-2 border border-primary"
             variant="text"
             onClick={() => {
               auth.signOut();
@@ -93,11 +92,8 @@ export default function Home() {
             Logout
           </Button>
         </div>
-        <div>
-          ____________________________________________________________________________________{" "}
-        </div>
-        <div className="title" style={fontstyle}>
-          <h4>the ucla food truck review website</h4>
+        <div className="border-top border-light pt-2 px-5" style={fontstyle}>
+          <h4>the hub of ucla food truck reviews</h4>
         </div>
       </div>
 
@@ -220,35 +216,65 @@ export default function Home() {
         )}
       </div>
 
-      <div className="w-100 h-100 bg-primary text-white font-weight-bold
-       d-flex justify-content-between">
-        <div
-          className="w-50 info d-flex flex-column align-items-center"
-          style={column}
-        >
-          <h4>what the truck - ucla's food truck page</h4>
+      <div
+        className="w-100 h-100 bg-primary text-white font-weight-bold
+       d-flex justify-content-around gap-3"
+      >
+        <div className="d-flex flex-column align-items-center" style={column}>
+          <h4>What the Truck</h4>
           <div className="align-items-left" style={image}>
-            <img src="logo.jpeg"></img>
+            <img
+              src="logo.jpeg"
+              alt="logo"
+              className="rounded rounded-3 border border-dark border-2"
+            ></img>
+          </div>
+        </div>
+        <div style={column}>
+          <h4>
+            <u>Our Mission:</u>
+          </h4>
+          <div className="align-items-left" style={image}>
+            Hello
           </div>
         </div>
         <div style={column}>
           <div>
             {" "}
-            <h4>contact us at the following: </h4>
+            <h4>
+              <u>Contact: </u>{" "}
+            </h4>
           </div>
           <div align="left">
-            <li>shlokj@g.ucla.edu</li>
-            <li>skath@g.ucla.edu</li>
-            <li>sidharthsudhir@g.ucla.edu</li>
-            <li>anmolgupta23@g.ucla.edu</li>
-            <li>ryanswkim2003@gmail.com</li>
+            <li>
+              <a className="text-light" href="mailto: shlokj@g.ucla.edu">
+                shlokj@g.ucla.edu
+              </a>
+            </li>
+            <li>
+              <a className="text-light" href="mailto: skath@g.ucla.edu">
+                skath@g.ucla.edu
+              </a>
+            </li>
+            <li>
+              <a
+                className="text-light"
+                href="mailto: sidharthsudhir@g.ucla.edu"
+              >
+                sidharthsudhir@g.ucla.edu
+              </a>
+            </li>
+            <li>
+              <a className="text-light" href="mailto: anmolgupta23@g.ucla.edu">
+                anmolgupta23@g.ucla.edu
+              </a>
+            </li>
+            <li>
+              <a className="text-light" href="mailto: ryanswkim2003@gmail.com">
+                ryanswkim2003@gmail.com
+              </a>
+            </li>
           </div>
-        </div>
-
-        <div className="w-25 locations d-flex flex-column justify-content-between align-items-center">
-          {[1, 2, 3, 4, 5].map((_) => (
-            <p>Filler</p>
-          ))}
         </div>
       </div>
     </div>
