@@ -1,4 +1,4 @@
-import { Stack, Button, Rating, TextField, Paper, Grid, autocompleteClasses } from "@mui/material";
+import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
 import React, { useState } from "react";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 // TODO: change write your review customized to food truck page -> Line 17
 
 const styles = {
-  heading: { 
+  heading: {
     margin: 32,
     marginTop: 50,
-    marginBottom: 20
+    marginBottom: 20,
   },
 
   fileUpload: {
@@ -19,49 +19,48 @@ const styles = {
     marginLeft: 120,
   },
 
-  paper: { 
-    paddingTop: 32, 
-    paddingLeft: "25%", 
+  paper: {
+    paddingTop: 32,
+    paddingLeft: "25%",
     align: "center",
-    borderRadius: 40
+    borderRadius: 40,
   },
 
   button: {
-    paddingTop: '40px',
-    paddingBottom: '30px'
+    paddingTop: "40px",
+    paddingBottom: "30px",
   },
 
   textField: {
-    marginTop: 32, 
+    marginTop: 32,
     marginLeft: 150,
     marginRight: 150,
     width: 400,
-    textAlign: 'left',
-    fontFamily:'Cambria, Cochin, Georgia, Times, Times New Roman, serif',
+    textAlign: "left",
+    fontFamily: "Cambria, Cochin, Georgia, Times, Times New Roman, serif",
   },
 
   title: {
-    fontWeight: 'bold',
-    fontSize: '30px',
-    margin: '0px',
+    fontWeight: "bold",
+    fontSize: "30px",
+    margin: "0px",
   },
 
   reviewCard: {
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 50,
     width: 700,
-    margin: 'auto',
+    margin: "auto",
     marginTop: 50,
-    marginBottom: 50
+    marginBottom: 50,
   },
 
   descriptors: {
-    fontWeight: 'lighter',
-    textAlign: 'center',
-    margin: 'auto',
+    fontWeight: "lighter",
+    textAlign: "center",
+    margin: "auto",
     marginTop: 20,
-  }
-
+  },
 };
 
 export default function ReviewInput() {
@@ -134,7 +133,9 @@ export default function ReviewInput() {
                 />
               </div>
               <div className="descriptors">
-                <h3 style={styles.heading} align="center">Upload an image</h3>
+                <h3 style={styles.heading} align="center">
+                  Upload an image
+                </h3>
               </div>
 
               <form

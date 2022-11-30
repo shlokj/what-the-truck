@@ -16,6 +16,19 @@ import {
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+const column = {
+  paddingTop: 10,
+  fontFamily: "Verdana",
+};
+
+const fontstyle = {
+  fontFamily: "Verdana",
+};
+
+const image = {
+  paddingBottom: 20,
+};
+
 const placeholderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
 	@@ -15,67 +20,201 @@ Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa
 eget. Maecenas accumsan lacus vel facilisis volutpat est velit egestas. 
@@ -57,11 +70,10 @@ export default function Home() {
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
-      <div className="bg-success w-100 d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
+      <div className="bg-primary w-100 d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
         <div className="w-100 d-flex justify-content-around">
           <div className="d-flex justify-content-between align-items-center gap-2">
-            <div>Logo</div>
-            <div>
+            <div style={fontstyle}>
               <h1>what the tr*ck</h1>
             </div>
           </div>
@@ -79,8 +91,8 @@ export default function Home() {
         <div>
           ____________________________________________________________________________________{" "}
         </div>
-        <div className="title">
-          <h2>the ucla food trucks</h2>
+        <div className="title" style={fontstyle}>
+          <h4>the ucla food truck review website</h4>
         </div>
       </div>
 
@@ -201,21 +213,31 @@ export default function Home() {
         )}
       </div>
 
-      <div className="w-100 bg-success d-flex justify-content-between">
-        <div className="w-25 info d-flex flex-column align-items-center">
-          Hello
+      <div className="w-100 h-100 bg-primary d-flex justify-content-between">
+        <div
+          className="w-50 info d-flex flex-column align-items-center"
+          style={column}
+        >
+          <h4>what the truck - ucla's food truck page</h4>
+          <div className="align-items-left" style={image}>
+            <img src="logo.jpeg"></img>
+          </div>
         </div>
+        <div style={column}>
+          <div>
+            {" "}
+            <h4>contact us at the following: </h4>
+          </div>
+          <div align="left">
+            <li>shlokj@g.ucla.edu</li>
+            <li>skath@g.ucla.edu</li>
+            <li>sidharthsudhir@g.ucla.edu</li>
+            <li>anmolgupta23@g.ucla.edu</li>
+            <li>ryanswkim2003@gmail.com</li>
+          </div>
+        </div>
+
         <div className="w-25 locations d-flex flex-column justify-content-between align-items-center">
-          {[1, 2, 3, 4, 5].map((_) => (
-            <p>Filler</p>
-          ))}
-        </div>
-        <div className="w-25 links d-flex flex-column justify-content-between align-items-center">
-          {[1, 2, 3, 4, 5].map((_) => (
-            <p>Filler</p>
-          ))}
-        </div>
-        <div className="w-25 companies d-flex flex-column justify-content-between align-items-center">
           {[1, 2, 3, 4, 5].map((_) => (
             <p>Filler</p>
           ))}
