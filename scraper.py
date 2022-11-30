@@ -39,99 +39,98 @@ desc = {"Cafe Vietnam": '''A rotating crop of seasonal items (like egg rolls, fr
         "Dulce Europa Shaved Ice": '''Look, we get it. Summers in Los Angeles get real, real hot. And when it's real, real hot, you need a real way to cool off: with some premium shaved ice, made of 100% real ingredients culled from California's freshest fruit juices. At Dulce Europa Shaved Ice, that realness is served up right from the window of a food truck, making your sweet dreams a sweet reality. Unlike your traditional shaved ice truck, using syrups that are chock full of sugar and artificial flavor, Dulce Europa Shaved Ice has a plethora of homemade flavors that feature the best in seasonal fruits Sun Valley has to offer. ''',
         "Habibi Shack": '''Habibi Shack is an up and coming Mediterranean food truck based in Los Angeles. Our food comes from authentic recipes our mother used to make us as children. Our food is halal, vegan and vegetarian friendly. We have some LA favorites as well.''',
         "Flaming Grain": '''It’s no secret Los Angeles, CA is a health conscious city. Flaming Grain is the hero of hungry Angelenos seeking some nutritious eats on the streets. This truck’s rolling through the City of Angels serving up gourmet bowls that provide a balanced meal without skimping on the taste. Every bowl on the menu sports the perfect combination of produce, carbs, and protein you need to fuel your day. Grab a bowl of hoisin glazed chicken served with a side of avocado and red peppers or sample some pinto beans served with corn and rice.''',
-        "Yalla": '''Yalla Truck is a favorite amongst Angelenos, and it's easy to see why. It's a food truck that's modernizing traditional Middle Eastern and Mediterranean eats on the streets, putting together a fully customizable menu that fits just about everyone's needs. At Yalla Truck, your designer meal comes together in 3 easy steps. First, choose your form, they've got the authentic pita sandwich alongside inauthentic but totally delicious options like a tortilla wrap, salad and even tacos. From there, choose your protein: Yalla Truck's got chicken breast in specialty Mediterranean herbs and spices.'''
+        "Yalla": '''Yalla Truck is a favorite amongst Angelenos, and it's easy to see why. It's a food truck that's modernizing traditional Middle Eastern and Mediterranean eats on the streets, putting together a fully customizable menu that fits just about everyone's needs. At Yalla Truck, your designer meal comes together in 3 easy steps. First, choose your form, they've got the authentic pita sandwich alongside inauthentic but totally delicious options like a tortilla wrap, salad and even tacos. From there, choose your protein: Yalla Truck's got chicken breast in specialty Mediterranean herbs and spices.''',
+        "Bison Burger": '''At Bison Burger, regular old beef patties are a thing of the past. The Los Angeles truck has made a name for themselves, grilling up not only their titular bison, but elk, venison, boar, and Kobe beef as well. Their namesake burger, which features a 5oz patty on a Homeboy Industries bun, is always a great first move, but repeat visits will be a wash without giving a look to their other meats.'''
 }
 
 
 
 
 
-table = pd.read_html('https://menu.dining.ucla.edu/hours/')
+# table = pd.read_html('https://menu.dining.ucla.edu/hours/')
 
-match = r"[^59\-\.]"
+# match = r"[^59\-\.]"
 
-df = table[0]
+# df = table[0]
 
-lunchTrucks = []
-dinnerTrucks = []
-extendedTrucks = []
+# lunchTrucks = []
+# dinnerTrucks = []
+# extendedTrucks = []
 
 
-mealTimes = ['Lunch/Brunch','Dinner','Extended Dinner']
+# mealTimes = ['Lunch/Brunch','Dinner','Extended Dinner']
 
-#modify scraped list
-def correctList(x):
+# #modify scraped list
+# def correctList(x):
     
-    for i in x:
+#     for i in x:
 
-        j = 0
+#         j = 0
 
-        while j < len(i):
-            if j <= len(i)-2:
-                if i[j]==' ' and i[j+1]==' ':
+#         while j < len(i):
+#             if j <= len(i)-2:
+#                 if i[j]==' ' and i[j+1]==' ':
 
-                    newEl = i[j+2:len(i)]
+#                     newEl = i[j+2:len(i)]
 
-                    modEl = i[0:j]
-                    x.append(modEl)
-                    x.append(newEl)
-            j+=1
+#                     modEl = i[0:j]
+#                     x.append(modEl)
+#                     x.append(newEl)
+#             j+=1
     
-    y = []
-    for i in x:
-        if "  " in i or i=='':
-            continue
-        else:
-            y.append(i)
+#     y = []
+#     for i in x:
+#         if "  " in i or i=='':
+#             continue
+#         else:
+#             y.append(i)
 
-    for i in y:
-        if i == ' Hours':
-            y.remove(i)
+#     for i in y:
+#         if i == ' Hours':
+#             y.remove(i)
     
-    return y
+#     return y
 
 
-def getTrucksForTime(mealTime,pattern,arr):
+# def getTrucksForTime(mealTime,pattern,arr):
 
-  for j in range(9,12):
+#   for j in range(9,11):
 
-        x = df.loc[j][mealTime]
+#         x = df.loc[j][mealTime]
 
-        y = re.findall(pattern,x)
+#         y = re.findall(pattern,x)
 
-        z = (y[10::])
+#         z = (y[10::])
 
-        exTrucks = ""
+#         exTrucks = ""
 
-        for k in z:
-            exTrucks+=k
+#         for k in z:
+#             exTrucks+=k
     
-        arr.append(exTrucks)
+#         arr.append(exTrucks)
 
 
-for i in mealTimes:
+# for i in mealTimes:
     
-    if i == "Lunch/Brunch":
-        getTrucksForTime(i,r"[^113\-\.]",lunchTrucks)
+#     if i == "Lunch/Brunch":
+#         getTrucksForTime(i,r"[^113\-\.]",lunchTrucks)
     
-    elif i == "Dinner":
-        getTrucksForTime(i,r"[^59\-\.]",dinnerTrucks)
+#     elif i == "Dinner":
+#         getTrucksForTime(i,r"[^59\-\.]",dinnerTrucks)
       
-    elif i == "Extended Dinner":
-        getTrucksForTime(i,r"[^912\-\.]",extendedTrucks)
+#     elif i == "Extended Dinner":
+#         getTrucksForTime(i,r"[^912\-\.]",extendedTrucks)
     
 
-lunchTrucks = lunchTrucks[1::]
-    
 
-lunchTrucks=correctList(lunchTrucks)
-dinnerTrucks=correctList(dinnerTrucks)
-extendedTrucks=correctList(extendedTrucks)
+# lunchTrucks=correctList(lunchTrucks)
+# dinnerTrucks=correctList(dinnerTrucks)
+# extendedTrucks=correctList(extendedTrucks)
 
-print(lunchTrucks)
-print(dinnerTrucks)
+# print(lunchTrucks)
+# print(dinnerTrucks)
 
-print(extendedTrucks)
+# print(extendedTrucks)
 
 
 
@@ -147,18 +146,37 @@ for doc in docs:
     key = doc.id
     db.collection('Trucks').document(key).delete()
 
+for i in list(desc.keys()):
+    j = i.replace(" ","")
+    k = j.replace("'","")
+    db.collection(u'Trucks').document(f'{k.lower()}').set({'Name': i, 'Time': '', 'Description': desc[i]})
 
-for i in lunchTrucks:
-    j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch', 'Description': desc[j]})
 
-for i in dinnerTrucks:
-    j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner', 'Description': desc[j]})
 
-for i in extendedTrucks:
-    j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner', 'Description': desc[j]})
+
+
+
+# for i in lunchTrucks:
+#     j = i.replace("'","")
+#     doc = db.collection(u'Trucks').document(f'{j}')
+#     if doc.exists():
+#         continue
+
+#     db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch', 'Description': desc[j]})
+
+# for i in dinnerTrucks:
+#     j = i.replace("'","")
+#     doc = db.collection(u'Trucks').document(f'{j}')
+#     if doc.exists():
+#         continue
+#     db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner', 'Description': desc[j]})
+
+# for i in extendedTrucks:
+#     j = i.replace("'","")
+#     doc = db.collection(u'Trucks').document(f'{j}')
+#     if doc.exists():
+#         continue
+#     db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner', 'Description': desc[j]})
 
 
 
