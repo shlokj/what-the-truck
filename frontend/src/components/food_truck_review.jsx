@@ -1,10 +1,9 @@
-import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
+import { Stack, Button, Rating, TextField, Paper, Grid, ratingClasses } from "@mui/material";
 import React, { useState } from "react";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
-import { storage } from "..";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+// TODO: change write your review customized to food truck page -> Line 17
 
 const styles = {
   heading: {
@@ -66,74 +65,19 @@ const styles = {
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState(0);
   const CHARACTER_LIMIT = 200;
 
-  const [imageFile, setImageFile] = useState(null);
-  const [fileUploadPercent, setFileUploadPercent] = useState(0);
+  const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
 
-  // console.log(imageFile.name);
 
-  const foodTruckName = useParams()
-    .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
-    .toLowerCase();
 
-  function handleFileSelect(event) {
-    setImageFile(event.target.files[0]);
-  }
-
-  function uploadImageAndAddReview() {
-    if (!imageFile) {
-      alert("Please choose an image first.");
-    }
-
-    const imagesRef = ref(storage, `/images/${imageFile.name}`);
-
-    const uploadTask = uploadBytesResumable(imagesRef, imageFile);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setFileUploadPercent(percent);
-      },
-      (error) => {
-        console.log(error);
-        alert("Failed to upload image. Please try again later.");
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          addReview(reviewText, downloadURL);
-        });
-      }
-    );
-  }
-
-  let temp = "";
-
-  for (let i = 0; i < foodTruckName.length; i++) {
-    let ch = foodTruckName[i];
-    if (ch !== ch.toUpperCase()) {
-      temp += ch;
-    } else {
-      if (i !== 0) {
-        temp += " ";
-        temp += ch;
-      } else {
-        temp += ch;
-      }
-    }
-  }
-
-  async function addReview(text, reviewImage) {
+  async function addReview(reviewText) {
     const docRef = doc(db, "Trucks", foodTruckName);
     const colRef = collection(docRef, "Reviews");
 
     await addDoc(colRef, {
-      text,
-      reviewImage,
+      text: reviewText,
     })
       .then(() => {
         console.log("CREATED");
@@ -145,14 +89,7 @@ export default function ReviewInput() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (reviewText.length === 0) {
-      return;
-    }
-    if (imageFile != null) {
-      uploadImageAndAddReview();
-    } else {
-      addReview(reviewText, null);
-    }
+    addReview(reviewText);
   };
 
   return (
@@ -195,11 +132,7 @@ export default function ReviewInput() {
                 method="post"
                 style={styles.fileUpload}
               >
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileSelect}
-                />
+                <input type="file" name="file1" id="file1" />
               </form>
 
               <div className="descriptors">
