@@ -65,6 +65,7 @@ const styles = {
 
 export default function ReviewInput() {
   const [reviewText, setReviewText] = useState("");
+  const CHARACTER_LIMIT = 200;
 
   const foodTruckName = useParams().foodTruckName.replace(/[^A-Za-z0-9]/g, "");
 
@@ -106,8 +107,6 @@ export default function ReviewInput() {
     addReview(reviewText);
   };
 
-
-
   return (
     <Grid container style={styles.paper}>
       <Stack spacing={5}>
@@ -128,8 +127,12 @@ export default function ReviewInput() {
                   hintText="Message Field"
                   floatingLabelText="MultiLine and FloatingLabel"
                   multiline
-                  rows={8}
+                  rows={7}
+                  inputProps={{
+                    maxLength: CHARACTER_LIMIT,
+                  }}
                   onChange={(e) => setReviewText(e.target.value)}
+                  helperText={`${reviewText.length}/${CHARACTER_LIMIT}`}
                 />
               </div>
               <div className="descriptors">
@@ -156,7 +159,9 @@ export default function ReviewInput() {
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
-                <Button variant="contained" onClick = {handleSubmit}>Submit Review</Button>
+                <Button variant="contained" onClick={handleSubmit}>
+                  Submit Review
+                </Button>
               </div>
             </div>
           </Stack>
