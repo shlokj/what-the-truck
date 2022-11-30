@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { ImageCarousel } from "../components";
 import { ReviewsList } from "../components";
 import { useParams } from "react-router-dom";
+import { collection, doc, getDocs, getDoc } from 'firebase/firestore';
+import { db } from "..";
 // import StarIcon from "@mui/icons-material/Star";
 
 const styles = {
@@ -21,10 +23,52 @@ const styles = {
 };
 
 export default function FoodtruckPage() {
+
   const navigate = useNavigate();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
     .toLowerCase();
+
+  async function getReviews(){
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+    const reviews = await getDocs(colRef);
+    const allReviews=[];
+    reviews.forEach(doc => {
+      allReviews.push(doc.data().text);
+  })
+
+  return allReviews;
+  
+  }
+
+  var finalReviews = getReviews().then(function(result) {
+    let reviews = result;
+    console.log(reviews);
+ });
+
+
+ async function getDesc(){
+    const docRef = doc(db, "Trucks", foodTruckName);
+    try {
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()) {
+          return (docSnap.data().Description);
+      } else {
+          console.log("Document does not exist")
+      }
+
+    } catch(error) {
+        console.log(error)
+    }
+  }
+
+  var desc = getDesc().then(function(result) {
+    let truckDescription = result;
+    console.log(truckDescription);
+  });
+
+  
   const [value, setValue] = useState(3.5); // replace 4 with variable that displays average rating of food truck
   return (
     <Paper style={{ maxHeight: "100vh", overflow: "auto" }}>
