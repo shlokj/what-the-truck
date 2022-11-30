@@ -60,7 +60,10 @@ export default function Home() {
       <div className="bg-success w-100 d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
         <div className="w-100 d-flex justify-content-around">
           <div className="d-flex justify-content-between align-items-center gap-2">
-            <div>Logo</div>
+            <div>
+              <img src="/public/truckLogo.png">
+              </img>
+            </div>
             <div>
               <h1>what the tr*ck</h1>
             </div>
@@ -203,19 +206,9 @@ export default function Home() {
 
       <div className="w-100 bg-success d-flex justify-content-between">
         <div className="w-25 info d-flex flex-column align-items-center">
-          Hello
+          What the truck
         </div>
         <div className="w-25 locations d-flex flex-column justify-content-between align-items-center">
-          {[1, 2, 3, 4, 5].map((_) => (
-            <p>Filler</p>
-          ))}
-        </div>
-        <div className="w-25 links d-flex flex-column justify-content-between align-items-center">
-          {[1, 2, 3, 4, 5].map((_) => (
-            <p>Filler</p>
-          ))}
-        </div>
-        <div className="w-25 companies d-flex flex-column justify-content-between align-items-center">
           {[1, 2, 3, 4, 5].map((_) => (
             <p>Filler</p>
           ))}
