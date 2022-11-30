@@ -18,11 +18,11 @@ import { useNavigate } from "react-router-dom";
 
 const column = {
   paddingTop: 10,
-  fontFamily: "Verdana",
+  fontWeight: '50px'
 };
 
 const fontstyle = {
-  fontFamily: "Verdana",
+  fontWeight: '50px'
 };
 
 const image = {
@@ -70,7 +70,8 @@ export default function Home() {
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
-      <div className="bg-primary w-100 d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
+      <div className="bg-primary text-white w-100 font-weight-bold
+       d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
         <div className="w-100 d-flex justify-content-around">
           <div className="d-flex justify-content-between align-items-center gap-2">
             <div style={fontstyle}>
@@ -168,7 +169,9 @@ export default function Home() {
 
         {popup ? (
           <div
-            className="position-absolute align-self-end mt-5 p-4 d-flex flex-column align-items-center justify-content-between gap-2 border border-dark rounded rounded-3"
+            className="position-absolute align-self-end mt-5
+             p-4 d-flex flex-column align-items-center justify-content-between
+              gap-2 border border-dark rounded rounded-3"
             style={{ left: "80%" }}
           >
             <FormControl>
@@ -213,7 +216,8 @@ export default function Home() {
         )}
       </div>
 
-      <div className="w-100 h-100 bg-primary d-flex justify-content-between">
+      <div className="w-100 h-100 bg-primary text-white font-weight-bold
+       d-flex justify-content-between">
         <div
           className="w-50 info d-flex flex-column align-items-center"
           style={column}
