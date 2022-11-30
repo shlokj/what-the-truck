@@ -150,15 +150,15 @@ for doc in docs:
 
 for i in lunchTrucks:
     j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch'})
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch', 'Description': desc[j]})
 
 for i in dinnerTrucks:
     j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner'})
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner', 'Description': desc[j]})
 
 for i in extendedTrucks:
     j = i.replace("'","")
-    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner'})
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner', 'Description': desc[j]})
 
 
 
