@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-// import Magnifier from "./Magnifier";
 import "./slider.scss";
 
 const SNAP_DIST = 12.5;
 
 export default function ImageCarousel() {
-  const [imageIndex, setIndex] = useState(0);
-  const [x, setX] = useState(25);
   const [anchor, setAnchor] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [mousePos, setMouse] = useState(0);
-  const [lg, setLg] = useState(window.innerWidth >= 992);
-
-  window.addEventListener("resize", () => {
-    setLg(window.innerWidth >= 992);
-  });
 
   function shift(index) {
     // shifting the carousel left and right
@@ -32,10 +24,10 @@ export default function ImageCarousel() {
     return images;
   }
 
-  const images = importImages(
-    require.context("../pictures", false, /\.(jpg)$/)
-  );
+  const images = importImages(require.context("./pictures", false, /\.(jpg)$/));
   const maxIndex = Object.values(images).length - 1;
+  const [imageIndex, setIndex] = useState(Math.round(maxIndex / 2));
+  const [x, setX] = useState(25 - Math.round(maxIndex / 2) * 50);
 
   return (
     <div
@@ -49,10 +41,11 @@ export default function ImageCarousel() {
         setDragging(false);
         const i = 25 - imageIndex * 50;
         const d = x - i;
+        console.log(d);
         if (d >= -SNAP_DIST && d <= SNAP_DIST) {
           shift(imageIndex);
         } else {
-          shift(d < -SNAP_DIST ? imageIndex + 1 : imageIndex - 1);
+          shift(imageIndex - Math.round(d / 50));
         }
       }}
       onMouseMove={(e) => {
@@ -61,7 +54,7 @@ export default function ImageCarousel() {
           return;
         }
         const diff =
-          (100 * (e.clientX - mousePos)) / document.documentElement.clientWidth;
+          (333 * (e.clientX - mousePos)) / document.documentElement.clientWidth;
 
         if (diff > 0) {
           setX(Math.min(25, anchor + diff));
@@ -94,67 +87,30 @@ export default function ImageCarousel() {
                   setAnchor(x);
                 }}
               >
-                {/* <Magnifier src={item} visible={lg} /> */}
+                <div
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={item}
+                    draggable={false}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      userSelect: "none",
+                      borderRadius: "5%",
+                      border: "1px solid black",
+                    }}
+                    alt="Watch display"
+                  />
+                </div>
               </div>
             </div>
           )
         )}
-      </div>
-
-      <div className={lg ? "buttons-lg" : "buttons-small"} id="buttons">
-        <input
-          className="shift-btn"
-          value="<"
-          disabled={imageIndex === 0}
-          style={lg ? { display: "inline-block" } : { display: "none" }}
-          key="left"
-          type="button"
-          onClick={() => {
-            shift(imageIndex - 1);
-          }}
-        />
-        {Object.values(images).map((item, index) =>
-          lg ? ( // image buttons for >= 992px
-            <input
-              style={
-                imageIndex === index
-                  ? { border: "2.5px solid black" }
-                  : { border: "2px solid #EEE" }
-              }
-              key={item}
-              type="image"
-              onClick={() => {
-                shift(index);
-              }}
-              src={item}
-              alt="button"
-            />
-          ) : (
-            <input // circle buttons for < 992px
-              style={
-                imageIndex === index
-                  ? { backgroundColor: "black" }
-                  : { backgroundColor: "lightgrey" }
-              }
-              key={item}
-              type="button"
-              onClick={() => {
-                shift(index);
-              }}
-            />
-          )
-        )}
-        <input
-          className="shift-btn"
-          value=">"
-          disabled={imageIndex === maxIndex}
-          style={lg ? { display: "inline-block" } : { display: "none" }}
-          key="right"
-          type="button"
-          onClick={() => {
-            shift(imageIndex + 1);
-          }}
-        />
       </div>
     </div>
   );

@@ -74,6 +74,10 @@ export default function Home() {
        d-flex flex-column justify-content-between align-items-center gap-3 py-4 px-3">
         <div className="w-100 d-flex justify-content-around">
           <div className="d-flex justify-content-between align-items-center gap-2">
+            <div>
+              <img src="/public/truckLogo.png">
+              </img>
+            </div>
             <div style={fontstyle}>
               <h1>what the tr*ck</h1>
             </div>

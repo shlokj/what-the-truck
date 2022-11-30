@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import "bootstrap/dist/css/bootstrap.css";
 import { useNavigate } from "react-router-dom";
-// import { Image } from "mui-image";
 import { ImageCarousel } from "../components";
 import { ReviewsList } from "../components";
 import { useParams } from "react-router-dom";
