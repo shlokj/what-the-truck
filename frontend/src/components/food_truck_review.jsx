@@ -1,8 +1,9 @@
-import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
+import { Stack, Button, TextField, Paper, Grid } from "@mui/material";
 import React, { useState } from "react";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
+import Rating from './star_rating';
 // TODO: change write your review customized to food truck page -> Line 17
 
 const styles = {
@@ -58,6 +59,7 @@ const styles = {
   descriptors: {
     fontWeight: "lighter",
     textAlign: "center",
+    align: "center",
     margin: "auto",
     marginTop: 20,
   },
@@ -138,7 +140,7 @@ export default function ReviewInput() {
                   Rate the food truck out of 5 stars
                 </h3>
                 <div align="center">
-                  <Rating size="large"></Rating>
+                  <Rating></Rating>
                 </div>
               </div>
               <div className="button" align="center" style={styles.button}>
