@@ -56,7 +56,7 @@ def correctList(x):
 
 def getTrucksForTime(mealTime,pattern,arr):
 
-  for j in range(9,12):
+  for j in range(9,11):
 
         x = df.loc[j][mealTime]
 
@@ -76,6 +76,7 @@ for i in mealTimes:
     
     if i == "Lunch/Brunch":
         getTrucksForTime(i,r"[^113\-\.]",lunchTrucks)
+        
     
     elif i == "Dinner":
         getTrucksForTime(i,r"[^59\-\.]",dinnerTrucks)
@@ -84,17 +85,29 @@ for i in mealTimes:
         getTrucksForTime(i,r"[^912\-\.]",extendedTrucks)
     
 
-lunchTrucks = lunchTrucks[1::]
+
+# lunchTrucks = lunchTrucks[1::]
+
+
     
+
 
 lunchTrucks=correctList(lunchTrucks)
 dinnerTrucks=correctList(dinnerTrucks)
 extendedTrucks=correctList(extendedTrucks)
 
 
+# print(lunchTrucks)
+# print(dinnerTrucks)
 
-#firebase connection
-cred = credentials.Certificate("servKey.json")
+# print(extendedTrucks)
+
+
+
+
+
+# firebase connection
+cred = credentials.Certificate("../servKey.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -106,13 +119,23 @@ for doc in docs:
 
 
 for i in lunchTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Lunch'})
+     j = i.replace("'","")
+     db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Lunch'})
 
 for i in dinnerTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Dinner'})
+    j = i.replace("'","")
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Dinner'})
 
 for i in extendedTrucks:
-    db.collection(u'Trucks').add({'Name': i, 'Time': 'Extended Dinner'})
+    j = i.replace("'","")
+    db.collection(u'Trucks').document(f'{j}').set({'Name': i, 'Time': 'Extended Dinner'})
+
+
+docs = db.collection(u'Trucks').stream()
+
+for doc in docs:
+    print(f'{doc.id} => {doc.to_dict()}')
+
 
 
 
