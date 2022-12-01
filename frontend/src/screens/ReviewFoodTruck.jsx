@@ -7,7 +7,7 @@ import Header from "../components/header";
 export default function ReviewFoodTruck() {
   return (
     <div className="ReviewFoodTruck">
-      <Header></Header>
+      <Header />
       <ReviewInput />
       <Footer />
     </div>

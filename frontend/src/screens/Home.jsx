@@ -54,7 +54,6 @@ export default function Home() {
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
-
       <Header></Header>
 
       <div className="w-75 d-flex flex-column align-items-center p-2 gap-4">
