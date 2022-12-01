@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "..";
+import Footer from "../components/footer";
 
 import { Box, Rating, Button, Stack } from "@mui/material";
 
@@ -116,6 +117,11 @@ export default function FoodtruckPage() {
       <div classname="ReviewsList">
         <ReviewsList />
       </div>
+      
+      <Footer>
+        
+      </Footer>
     </div>
+    
   );
 }
