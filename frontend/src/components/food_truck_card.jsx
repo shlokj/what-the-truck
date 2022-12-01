@@ -15,12 +15,14 @@ export default function FoodTruckCard({ name, text, imageURL }) {
       </div>
 
       <div className="w-50 h-100 d-flex flex-column justify-content-around align-items-center gap-2">
-        <div className="border border-dark rounded-4 px-2 py-1">
+        <div>
           <h2>
-            <Button>{name}</Button>
+            <Button className="border border-primary rounded-4 px-3 py-2">
+              {name}
+            </Button>
           </h2>
         </div>
-        <div className="border border-dark rounded-4 p-2">{text}</div>
+        <div className="p-1">{text}</div>
       </div>
     </div>
   );
