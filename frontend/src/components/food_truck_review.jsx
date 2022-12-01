@@ -168,7 +168,7 @@ export default function ReviewInput() {
 
   return (
     <Grid container style={styles.paper}>
-      <Stack spacing={5}>
+      <Stack spacing={5} marginBottom={6}>
         <Paper elevation={20}>
           <Stack direction="column" spacing={1}>
             <div className="reviewCard" style={styles.reviewCard}>
