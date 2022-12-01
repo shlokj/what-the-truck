@@ -7,9 +7,7 @@ export default function ReviewFoodTruck() {
   return (
     <div className="ReviewFoodTruck">
       <ReviewInput />
-      <Footer>
-
-      </Footer>
+      <Footer />
     </div>
   );
 }
