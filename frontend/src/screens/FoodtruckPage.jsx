@@ -117,11 +117,7 @@ export default function FoodtruckPage() {
       <div classname="ReviewsList">
         <ReviewsList />
       </div>
-      
-      <Footer>
-        
-      </Footer>
+      <Footer />
     </div>
-    
   );
 }
