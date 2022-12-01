@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { FoodTruckCard, Footer } from "../components";
 import Header from "../components/header";
 
-const DELTA = 8;
+const DELTA = 5;
 
 export default function Home() {
   const placeholderTrucks = [
@@ -178,7 +178,7 @@ export default function Home() {
               variant="outlined"
               className={`${
                 i - DELTA < 0 ? "" : "bg-light"
-              } p-0 fs-3 h-75 text-dark border-dark`}
+              } p-0 fs-3 h-75 text-primary border-primary`}
               onClick={() => {
                 setI(Math.max(i - DELTA, 0));
               }}
@@ -190,7 +190,7 @@ export default function Home() {
               variant="outlined"
               className={`${
                 i + DELTA >= display.length ? "" : "bg-light"
-              } p-0 fs-3 h-75 text-dark border-dark`}
+              } p-0 fs-3 h-75 text-primary border-primary`}
               onClick={() => {
                 setI(i + DELTA);
               }}
@@ -209,7 +209,7 @@ export default function Home() {
               <FormControl className="h-100 d-flex align-items-center justify-content-center">
                 <OutlinedInput
                   placeholder="Search"
-                  className="h-100 text-dark border-dark"
+                  className="h-100"
                   onChange={(e) => {
                     setSearch(e.target.value);
                     setI(0);
@@ -219,7 +219,7 @@ export default function Home() {
             </div>
             <Button
               variant="outlined"
-              className="h-100 text-dark border-dark"
+              className="h-100 text-primary border-primary"
               onClick={() => {
                 setPopup(!popup);
               }}
@@ -230,9 +230,9 @@ export default function Home() {
         </div>
 
         {display.length > 0 ? (
-          <div className="min-h-100 w-75 d-flex flex-column justify-content-between gap-3">
+          <div className="min-h-100 w-75 d-flex flex-column justify-content-between gap-4">
             {display.slice(i, i + DELTA).map((title) => (
-              <div className="mb-3">
+              <div>
                 <FoodTruckCard
                   name={title}
                   text={descriptions[title]}
@@ -245,11 +245,68 @@ export default function Home() {
           <div className="p-5" style={{ minHeight: "50vh" }}></div>
         )}
 
+        <div className="h-100 w-75 d-flex justify-content-between align-items-center">
+          <div className="h-100 d-flex gap-1 align-items-center">
+            <Button
+              variant="outlined"
+              className={`${
+                i - DELTA < 0 ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-primary border-primary`}
+              onClick={() => {
+                setI(Math.max(i - DELTA, 0));
+              }}
+              disabled={i === 0}
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="outlined"
+              className={`${
+                i + DELTA >= display.length ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-primary border-primary`}
+              onClick={() => {
+                setI(i + DELTA);
+              }}
+              disabled={i + DELTA >= display.length}
+            >
+              {`>`}
+            </Button>
+            <div className="ms-2 text-secondary">
+              ({Math.min(i + 1, display.length)} -{" "}
+              {Math.min(i + DELTA, display.length)})
+            </div>
+          </div>
+
+          <div className="d-flex h-75 justify-content-end align-items-center gap-3">
+            <div className="h-100 d-flex align-items-center justify-content-center">
+              <FormControl className="h-100 d-flex align-items-center justify-content-center">
+                <OutlinedInput
+                  placeholder="Search"
+                  className="h-100"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setI(0);
+                  }}
+                />
+              </FormControl>
+            </div>
+            <Button
+              variant="outlined"
+              className="h-100 text-primary border-primary"
+              onClick={() => {
+                setPopup(!popup);
+              }}
+            >
+              Sort
+            </Button>
+          </div>
+        </div>
+
         {popup ? (
           <div
             className="position-absolute align-self-end mt-5
              p-4 d-flex flex-column align-items-center justify-content-between
-              gap-2 border border-dark rounded rounded-3"
+              gap-2 border border-primary rounded rounded-3"
             style={{ left: "80%" }}
           >
             <FormControl>
@@ -293,63 +350,6 @@ export default function Home() {
           ""
         )}
       </div>
-
-      <div className="h-100 w-75 d-flex justify-content-between align-items-center">
-          <div className="h-100 d-flex gap-1 align-items-center">
-            <Button
-              variant="outlined"
-              className={`${
-                i - DELTA < 0 ? "" : "bg-light"
-              } p-0 fs-3 h-75 text-dark border-dark`}
-              onClick={() => {
-                setI(Math.max(i - DELTA, 0));
-              }}
-              disabled={i === 0}
-            >
-              {`<`}
-            </Button>
-            <Button
-              variant="outlined"
-              className={`${
-                i + DELTA >= display.length ? "" : "bg-light"
-              } p-0 fs-3 h-75 text-dark border-dark`}
-              onClick={() => {
-                setI(i + DELTA);
-              }}
-              disabled={i + DELTA >= display.length}
-            >
-              {`>`}
-            </Button>
-            <div className="ms-2 text-secondary">
-              ({Math.min(i + 1, display.length)} -{" "}
-              {Math.min(i + DELTA, display.length)})
-            </div>
-          </div>
-
-          <div className="d-flex h-75 justify-content-end align-items-center gap-3">
-            <div className="h-100 d-flex align-items-center justify-content-center">
-              <FormControl className="h-100 d-flex align-items-center justify-content-center">
-                <OutlinedInput
-                  placeholder="Search"
-                  className="h-100 text-dark border-dark"
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setI(0);
-                  }}
-                />
-              </FormControl>
-            </div>
-            <Button
-              variant="outlined"
-              className="h-100 text-dark border-dark"
-              onClick={() => {
-                setPopup(!popup);
-              }}
-            >
-              Sort
-            </Button>
-          </div>
-        </div>
       <Footer />
     </div>
   );

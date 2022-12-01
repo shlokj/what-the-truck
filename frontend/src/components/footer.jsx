@@ -1,19 +1,13 @@
 import logo from "./pictures/logo.jpeg";
 
-const column = {
-  paddingTop: 10,
-  fontWeight: "50px",
-  width: "25%",
-};
-
 export default function Footer() {
   return (
     <div
       className="w-100 h-100 bg-primary text-white font-weight-bold
-       d-flex justify-content-around gap-3 py-1"
+       d-flex justify-content-around gap-3 py-3"
     >
-      <div className="d-flex flex-column align-items-center" style={column}>
-        <h4>What the Truck</h4>
+      <div className="w-25 d-flex flex-column align-items-center">
+        <h4>What The Truck</h4>
         <div className="align-items-left">
           <img
             height="175px"
@@ -23,9 +17,9 @@ export default function Footer() {
           ></img>
         </div>
       </div>
-      <div style={column}>
-        <h4 align="center">
-          <u>Our Mission:</u>
+      <div className="w-25">
+        <h4 className="border-bottom py-1 border-light" align="center">
+          Our Mission:
         </h4>
         <div className="justify-content-end">
           <p>
@@ -41,44 +35,51 @@ export default function Footer() {
           </p>
         </div>
       </div>
-      <div style={column}>
-        <div>
-          {" "}
-          <h4>
-            <u>Contact: </u>{" "}
-          </h4>
-        </div>
-        <div className="d-flex flex-column justify-content-between gap-1">
-          <a
-            className="text-light text-decoration-none"
-            href="mailto: shlokj@g.ucla.edu"
-          >
-            shlokj@g.ucla.edu
-          </a>
-          <a
-            className="text-light text-decoration-none"
-            href="mailto: skath@g.ucla.edu"
-          >
-            skath@g.ucla.edu
-          </a>
-          <a
-            className="text-light text-decoration-none"
-            href="mailto: sidharthsudhir@g.ucla.edu"
-          >
-            sidharthsudhir@g.ucla.edu
-          </a>
-          <a
-            className="text-light text-decoration-none"
-            href="mailto: anmolgupta23@g.ucla.edu"
-          >
-            anmolgupta23@g.ucla.edu
-          </a>
-          <a
-            className="text-light text-decoration-none"
-            href="mailto: ryanswkim2003@gmail.com"
-          >
-            ryanswkim2003@gmail.com
-          </a>
+      <div className="w-25 d-flex flex-column align-items-center">
+        <h4 className="w-100 border-bottom py-1 border-light" align="center">
+          Contact Us:
+        </h4>
+        <div className="d-flex flex-column justify-content-between gap-2">
+          <li>
+            <a
+              className="text-light text-decoration-none fw-normal"
+              href="mailto: shlokj@g.ucla.edu"
+            >
+              shlokj@g.ucla.edu
+            </a>
+          </li>
+          <li>
+            <a
+              className="text-light text-decoration-none fw-normal"
+              href="mailto: skath@g.ucla.edu"
+            >
+              skath@g.ucla.edu
+            </a>
+          </li>
+          <li>
+            <a
+              className="text-light text-decoration-none fw-normal"
+              href="mailto: sidharthsudhir@g.ucla.edu"
+            >
+              sidharthsudhir@g.ucla.edu
+            </a>
+          </li>
+          <li>
+            <a
+              className="text-light text-decoration-none fw-normal"
+              href="mailto: anmolgupta23@g.ucla.edu"
+            >
+              anmolgupta23@g.ucla.edu
+            </a>
+          </li>
+          <li>
+            <a
+              className="text-light text-decoration-none fw-normal"
+              href="mailto: ryanswkim2003@gmail.com"
+            >
+              ryanswkim2003@gmail.com
+            </a>
+          </li>
         </div>
       </div>
     </div>

@@ -104,7 +104,6 @@ export default function FoodtruckPage() {
     console.log(truckName);
   });
 
-  const [value, setValue] = useState(3.5);
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
       <Header />
@@ -128,7 +127,7 @@ export default function FoodtruckPage() {
         />
       </Box>
       <h4>Today: Rieber 11 am- 2:30 pm, Sproul 9 pm - 12 am</h4> */}
-      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-3 py-5">
+      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-5">
         <div
           className="d-flex justify-content-between align-items-center"
           style={{ width: "90%" }}
@@ -210,9 +209,9 @@ export default function FoodtruckPage() {
         {reviewDisplay.length > 0 ? (
           <div
             className="d-flex align-items-center justify-content-center"
-            style={{ width: "90%" }}
+            style={{ width: "85%" }}
           >
-            <ReviewsList reviews={reviewDisplay} />
+            <ReviewsList reviews={reviewDisplay.slice(i, i + DELTA)} />
           </div>
         ) : (
           <div className="p-5" style={{ minHeight: "50vh" }}></div>
