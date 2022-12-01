@@ -12,19 +12,10 @@ import {
 import { getAuth } from "firebase/auth";
 
 import "bootstrap/dist/css/bootstrap.css";
-import { FoodTruckCard } from "../components";
-
-const column = {
-  paddingTop: 10,
-  fontWeight: "50px",
-};
+import { FoodTruckCard, Footer } from "../components";
 
 const fontstyle = {
   fontWeight: "50px",
-};
-
-const image = {
-  paddingBottom: 20,
 };
 
 const placeholderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -33,9 +24,9 @@ eget. Maecenas accumsan lacus vel facilisis volutpat est velit egestas.
 Tortor id aliquet lectus proin nibh nisl condimentum id. Facilisis leo 
 vel fringilla est ullamcorper. Eget egestas purus viverra accumsan in 
 nisl nisi scelerisque. Arcu odio ut sem nulla.`;
+const DELTA = 4;
 
 export default function Home() {
-  const DELTA = 4;
   const placeholderTrucks = [
     "Burger King1",
     "Pizza Hut2",
@@ -164,7 +155,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="p-5 min-vh-100"></div>
+          <div className="p-5" style={{ minHeight: "50vh" }}></div>
         )}
 
         {popup ? (
@@ -215,68 +206,7 @@ export default function Home() {
           ""
         )}
       </div>
-
-      <div
-        className="w-100 h-100 bg-primary text-white font-weight-bold
-       d-flex justify-content-around gap-3"
-      >
-        <div className="d-flex flex-column align-items-center" style={column}>
-          <h4>What the Truck</h4>
-          <div className="align-items-left" style={image}>
-            <img
-              src="logo.jpeg"
-              alt="logo"
-              className="rounded rounded-3 border border-dark border-2"
-            ></img>
-          </div>
-        </div>
-        <div style={column}>
-          <h4>
-            <u>Our Mission:</u>
-          </h4>
-          <div className="align-items-left" style={image}>
-            Hello
-          </div>
-        </div>
-        <div style={column}>
-          <div>
-            {" "}
-            <h4>
-              <u>Contact: </u>{" "}
-            </h4>
-          </div>
-          <div align="left">
-            <li>
-              <a className="text-light" href="mailto: shlokj@g.ucla.edu">
-                shlokj@g.ucla.edu
-              </a>
-            </li>
-            <li>
-              <a className="text-light" href="mailto: skath@g.ucla.edu">
-                skath@g.ucla.edu
-              </a>
-            </li>
-            <li>
-              <a
-                className="text-light"
-                href="mailto: sidharthsudhir@g.ucla.edu"
-              >
-                sidharthsudhir@g.ucla.edu
-              </a>
-            </li>
-            <li>
-              <a className="text-light" href="mailto: anmolgupta23@g.ucla.edu">
-                anmolgupta23@g.ucla.edu
-              </a>
-            </li>
-            <li>
-              <a className="text-light" href="mailto: ryanswkim2003@gmail.com">
-                ryanswkim2003@gmail.com
-              </a>
-            </li>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
