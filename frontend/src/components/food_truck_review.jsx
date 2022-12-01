@@ -17,23 +17,15 @@ const styles = {
 
   fileUpload: {
     textAlign: "center",
-    marginTop: 32,
+    marginTop: 25,
     marginBottom: 32,
     marginLeft: 120,
   },
 
   paper: {
-    paddingTop: 32,
-    paddingLeft: "25%",
     align: "center",
     borderRadius: 40,
   },
-
-  button: {
-    paddingTop: "40px",
-    paddingBottom: "30px",
-  },
-
   textField: {
     marginTop: 32,
     marginLeft: 150,
@@ -167,11 +159,15 @@ export default function ReviewInput() {
   };
 
   return (
-    <Grid container style={styles.paper}>
-      <Stack spacing={5} marginBottom={6}>
+    <Grid
+      container
+      style={styles.paper}
+      className="d-flex flex-column align-items-center"
+    >
+      <Stack>
         <Paper elevation={20}>
           <Stack direction="column" spacing={1}>
-            <div className="reviewCard" style={styles.reviewCard}>
+            <div className="reviewCard rounded" style={styles.reviewCard}>
               <div className="title">
                 <h1 align="center">Write a review here!</h1>
               </div>
@@ -215,7 +211,7 @@ export default function ReviewInput() {
 
               <div className="descriptors">
                 <h3 style={styles.heading} align="center">
-                  Rate the food truck out of 5 stars
+                  Rate the food truck
                 </h3>
                 <div align="center">
                   <Rating
@@ -227,7 +223,7 @@ export default function ReviewInput() {
                   />
                 </div>
               </div>
-              <div className="button" align="center" style={styles.button}>
+              <div align="center" className="py-4">
                 <Button variant="contained" onClick={handleSubmit}>
                   Submit Review
                 </Button>
