@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import { Grid, Paper } from "@mui/material";
-import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import "bootstrap/dist/css/bootstrap.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
