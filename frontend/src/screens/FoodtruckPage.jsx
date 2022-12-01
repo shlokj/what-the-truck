@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "..";
@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 export default function FoodtruckPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
     .toLowerCase();
@@ -95,7 +96,7 @@ export default function FoodtruckPage() {
           <Button
             variant="outlined"
             onClick={() => {
-              navigate("/truck/:foodTruckName/review");
+              navigate(location.pathname + "/review");
             }}
           >
             Review this Food Truck
@@ -109,7 +110,7 @@ export default function FoodtruckPage() {
             />
           </Box>
           {/* get dates and location from website and display */}
-          <h4>Today: Rieber 11 am- 2:30 pm, Sproul 9 pm - 12 am</h4>
+          {/* <h4>Today: Rieber 11 am- 2:30 pm, Sproul 9 pm - 12 am</h4> */}
         </Stack>
       </div>
       <div classname="ReviewsList">
