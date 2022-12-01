@@ -3,12 +3,10 @@ import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import { Button } from "@mui/material";
 
-
-
 export default function FoodTruckCard({ name, text, imageURL }) {
   return (
     <div className="bg-warning p-3 d-flex justify-content-center border align-items-center border-dark rounded-3 gap-4">
-      <div className="w-50 min-h-100 d-flex flex-column justify-content-center align-items-center gap-2" >
+      <div className="w-50 min-h-100 d-flex flex-column justify-content-center align-items-center gap-2">
         <img
           src={imageURL}
           alt="Food truck"
