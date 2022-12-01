@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "..";
+import Header from "../components/header";
 
 import {
   Box,
@@ -120,8 +121,13 @@ export default function FoodtruckPage() {
 
   const [value, setValue] = useState(3.5);
   return (
+    
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
+      <Header>
+        
+      </Header>
       <div className="d-flex justify-content-center align-items-center">
+
         <img
           height="450px"
           style={{ borderRadius: "16px" }}
