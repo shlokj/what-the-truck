@@ -293,6 +293,63 @@ export default function Home() {
           ""
         )}
       </div>
+
+      <div className="h-100 w-75 d-flex justify-content-between align-items-center">
+          <div className="h-100 d-flex gap-1 align-items-center">
+            <Button
+              variant="outlined"
+              className={`${
+                i - DELTA < 0 ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-dark border-dark`}
+              onClick={() => {
+                setI(Math.max(i - DELTA, 0));
+              }}
+              disabled={i === 0}
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="outlined"
+              className={`${
+                i + DELTA >= display.length ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-dark border-dark`}
+              onClick={() => {
+                setI(i + DELTA);
+              }}
+              disabled={i + DELTA >= display.length}
+            >
+              {`>`}
+            </Button>
+            <div className="ms-2 text-secondary">
+              ({Math.min(i + 1, display.length)} -{" "}
+              {Math.min(i + DELTA, display.length)})
+            </div>
+          </div>
+
+          <div className="d-flex h-75 justify-content-end align-items-center gap-3">
+            <div className="h-100 d-flex align-items-center justify-content-center">
+              <FormControl className="h-100 d-flex align-items-center justify-content-center">
+                <OutlinedInput
+                  placeholder="Search"
+                  className="h-100 text-dark border-dark"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setI(0);
+                  }}
+                />
+              </FormControl>
+            </div>
+            <Button
+              variant="outlined"
+              className="h-100 text-dark border-dark"
+              onClick={() => {
+                setPopup(!popup);
+              }}
+            >
+              Sort
+            </Button>
+          </div>
+        </div>
       <Footer />
     </div>
   );
