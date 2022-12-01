@@ -1,4 +1,6 @@
 import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "..";
@@ -65,6 +67,8 @@ const styles = {
 };
 
 export default function ReviewInput() {
+  const navigate = useNavigate();
+  const [uploadComplete, setUploadComplete] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const CHARACTER_LIMIT = 200;
@@ -107,7 +111,7 @@ export default function ReviewInput() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          addReview(reviewText, downloadURL);
+          addReview(reviewText, rating, downloadURL);
         });
       }
     );
@@ -140,6 +144,9 @@ export default function ReviewInput() {
     })
       .then(() => {
         console.log("CREATED");
+        setUploadComplete(false);
+        setReviewText("");
+        navigate(-1);
       })
       .catch((err) => {
         console.error("Error creating document", err);
@@ -151,6 +158,7 @@ export default function ReviewInput() {
     if (reviewText.length === 0 || rating === 0) {
       return;
     }
+    setUploadComplete(true);
     if (imageFile != null) {
       uploadImageAndAddReview();
     } else {
@@ -224,6 +232,7 @@ export default function ReviewInput() {
                   Submit Review
                 </Button>
               </div>
+              <div align="center">{uploadComplete && <CircularProgress />}</div>
             </div>
           </Stack>
         </Paper>
