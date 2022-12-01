@@ -1,10 +1,6 @@
-import React from "react"
+import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { LoginSignupTab } from "../components";
-
-const styles = {
-  main: { display: "flex", margin: "auto" },
-};
 
 export default function SignIn() {
   return (

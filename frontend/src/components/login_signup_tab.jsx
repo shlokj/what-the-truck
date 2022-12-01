@@ -1,9 +1,5 @@
 import React from "react";
-import { Grid, Paper } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Grid, Paper, Tabs, Tab, Typography, Box } from "@mui/material";
 import Login from "./login.jsx";
 import SignUp from "./signup.jsx";
 

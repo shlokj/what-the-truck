@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { SignIn, Home, ReviewFoodTruck, FoodtruckPage } from "./screens";
 import "bootstrap/dist/css/bootstrap.css";
-import "./styles/custom.scss";
 
 import { getAuth } from "firebase/auth";
 

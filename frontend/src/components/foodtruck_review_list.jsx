@@ -10,6 +10,7 @@ const commonStyles = {
   height: "6rem",
   alignContent: "center",
 };
+
 const styles = {
   username: { paddingLeft: "8px", marginTop: "8px" },
   reviewText: { paddingLeft: "8px", marginTop: "6px", paddingRight: "8px" },
