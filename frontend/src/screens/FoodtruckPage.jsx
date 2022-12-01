@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -6,8 +6,6 @@ import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { db } from "..";
 
 import {
-  Box,
-  Rating,
   Button,
   FormControlLabel,
   Radio,
@@ -19,45 +17,13 @@ import {
 import { ImageCarousel, ReviewsList, Footer } from "../components";
 import "bootstrap/dist/css/bootstrap.css";
 
-const placeholderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-	@@ -15,67 +20,201 @@ Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa
-eget. Maecenas accumsan lacus vel facilisis volutpat est velit egestas. 
-Tortor id aliquet lectus proin nibh nisl condimentum id. Facilisis leo 
-vel fringilla est ullamcorper. Eget egestas purus viverra accumsan in 
-nisl nisi scelerisque. Arcu odio ut sem nulla.`;
-
-const sampleReviews = [
-  {
-    user: "shubathuria123",
-    description: placeholderText,
-    rating: 4,
-  },
-  {
-    user: "rkim",
-    description: placeholderText,
-    rating: 3,
-  },
-  {
-    user: "shlokj",
-    description: placeholderText,
-    rating: 5,
-  },
-];
-
 const DELTA = 4;
 
 export default function FoodtruckPage() {
   const [search, setSearch] = useState("");
   const [best, setBest] = useState(true);
   const [i, setI] = useState(0);
-  const reviewDisplay = sampleReviews
-    .filter(
-      (review) =>
-        review.description.toLowerCase().includes(search.toLowerCase()) ||
-        review.user.toLowerCase().includes(search.toLowerCase())
-    )
-    .sort((a, b) => (best ? -1 : 1) * (a.rating - b.rating));
-
+  const [fbReviews, setFBReviews] = useState([]);
   const navigate = useNavigate();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -69,18 +35,37 @@ export default function FoodtruckPage() {
     const reviews = await getDocs(colRef);
     const allReviews = [];
     reviews.forEach((doc) => {
-      allReviews.push(doc.data().text);
+      const data = doc.data();
+      if (data != null && data.text != null && data.rating != null) {
+        const reviewObj = {
+          user: "to be replaced",
+          description: data.text,
+          rating: data.rating,
+        };
+        allReviews.push(reviewObj);
+        console.log(reviewObj);
+      }
+      console.log(allReviews);
     });
 
     return allReviews;
   }
 
-  var finalReviews = getReviews().then(function (result) {
-    let reviews = result;
-    console.log(reviews);
-  });
+  useEffect(() => {
+    getReviews().then(function (fbReviews) {
+      setFBReviews(fbReviews);
+    });
+  }, []);
 
-  async function getDesc() {
+  const reviewDisplay = fbReviews
+    .filter(
+      (review) =>
+        review.description.toLowerCase().includes(search.toLowerCase()) ||
+        review.user.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => (best ? -1 : 1) * (a.rating - b.rating));
+
+  async function getTruckDescription() {
     const docRef = doc(db, "Trucks", foodTruckName);
     try {
       const docSnap = await getDoc(docRef);
@@ -94,7 +79,7 @@ export default function FoodtruckPage() {
     }
   }
 
-  var desc = getDesc().then(function (result) {
+  var desc = getTruckDescription().then(function (result) {
     let truckDescription = result;
     console.log(truckDescription);
   });
