@@ -233,6 +233,38 @@ export default function Home() {
           ""
         )}
       </div>
+
+      <div className="h-100 d-flex gap-1 align-items-center">
+            <Button
+              variant="outlined"
+              className={`${
+                i - DELTA < 0 ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-dark border-dark`}
+              onClick={() => {
+                setI(Math.max(i - DELTA, 0));
+              }}
+              disabled={i === 0}
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="outlined"
+              className={`${
+                i + DELTA >= display.length ? "" : "bg-light"
+              } p-0 fs-3 h-75 text-dark border-dark`}
+              onClick={() => {
+                setI(i + DELTA);
+              }}
+              disabled={i + DELTA >= display.length}
+            >
+              {`>`}
+            </Button>
+            <div className="ms-2 text-secondary">
+              ({Math.min(i + 1, display.length)} -{" "}
+              {Math.min(i + DELTA, display.length)})
+            </div>
+          </div>
+      
       <Footer />
     </div>
   );
