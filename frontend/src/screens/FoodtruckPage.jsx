@@ -13,6 +13,7 @@ import {
   RadioGroup,
   FormControl,
   OutlinedInput,
+  Rating,
 } from "@mui/material";
 
 import { ImageCarousel, ReviewsList, Footer } from "../components";
@@ -25,6 +26,7 @@ export default function FoodtruckPage() {
   const [best, setBest] = useState(true);
   const [i, setI] = useState(0);
   const [fbReviews, setFBReviews] = useState([]);
+  const [truckName, setTruckName] = useState("");
   const [imageurls, setImageURLs] = useState([]);
   const navigate = useNavigate();
   const foodTruckName = useParams()
@@ -111,6 +113,7 @@ export default function FoodtruckPage() {
     try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
+        setTruckName(docSnap.data().Name);
         return docSnap.data().Name;
       } else {
         console.log("Document does not exist");
@@ -120,6 +123,10 @@ export default function FoodtruckPage() {
     }
   }
 
+  useEffect(() => {
+    getName().catch(console.error);
+  }, []);
+  
   var desc = getName().then(function (result) {
     let truckName = result;
     // console.log(truckName);
@@ -128,18 +135,32 @@ export default function FoodtruckPage() {
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
       <Header />
-      <div className="d-flex justify-content-center align-items-center">
+      {/* <div className="d-flex justify-content-center align-items-center">
         <img
           height="450px"
           style={{ borderRadius: "16px" }}
           src={"../food_truck_logos/" + foodTruckName + ".jpeg"}
           alt="creamy boys logo"
         />
-      </div>
+      </div> */}
       <div style={{ width: "30%", height: "30%" }}>
         <ImageCarousel />
       </div>
-      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-5">
+      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-3">
+        <div
+          style={{ width: "90%" }}
+          className="d-flex align-items-center justify-content-between"
+        >
+          <div className="bg-primary py-2 px-3 rounded rounded-3 border border-2 border-dark">
+            <h3 className="text-light">{truckName} Reviews</h3>
+          </div>
+          <div className="d-flex align-items-center gap-2 bg-primary py-2 px-3 rounded rounded-3 border border-2 border-dark">
+            <div>
+              <h3 className="text-light">Average Rating:</h3>
+            </div>
+            <Rating value={4} precision={0.5} readOnly />
+          </div>
+        </div>
         <div
           className="d-flex justify-content-between align-items-center"
           style={{ width: "90%" }}
