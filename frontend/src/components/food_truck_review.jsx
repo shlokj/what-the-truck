@@ -70,12 +70,13 @@ export default function ReviewInput() {
 
   const auth = getAuth();
 
-  async function getNumReviews() {
+  async function getRatingAndNumReviews() {
     const docRef = doc(db, "Trucks", foodTruckName);
     try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return docSnap.data().numReviews;
+        const data = docSnap.data();
+        return [data.avgRating, data.numReviews];
       } else {
         console.log("Document does not exist");
         return 0;
@@ -105,8 +106,13 @@ export default function ReviewInput() {
 
     uploadTask.on(
       "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+      },
       (error) => {
-        console.log(error);
+        console.error(error);
         alert("Failed to upload image. Please try again later.");
       },
       () => {
@@ -137,10 +143,15 @@ export default function ReviewInput() {
         })
           .then(() => {
             console.log("CREATED");
-            getNumReviews().then(async function (result) {
+            getRatingAndNumReviews().then(async function (result) {
               const dbRef = collection(db, "Trucks");
+              const avgRating = result[0];
+              const numReviews = result[1];
+              const newRating =
+                (avgRating * numReviews + rating) / (numReviews + 1);
               await updateDoc(doc(dbRef, foodTruckName), {
-                numReviews: result + 1,
+                avgRating: newRating,
+                numReviews: numReviews + 1,
               });
             });
             setUploading(false);
