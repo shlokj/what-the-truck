@@ -31,6 +31,7 @@ export default function ImageCarousel({ URLS }) {
 
   return (
     <div
+      draggable={false}
       role="none"
       className="container"
       onMouseUp={() => {
@@ -63,7 +64,7 @@ export default function ImageCarousel({ URLS }) {
         }
       }}
     >
-      <div className="carousel-container">
+      <div className="carousel-container" draggable={false}>
         {URLS.map(
           (
             item,
@@ -72,6 +73,7 @@ export default function ImageCarousel({ URLS }) {
             <div
               key={i}
               className="slide"
+              draggable={false}
               style={
                 dragging
                   ? { transition: "none", transform: `translateX(${x * 2}%)` }
@@ -83,6 +85,7 @@ export default function ImageCarousel({ URLS }) {
             >
               {console.log(item)}
               <div
+                draggable={false}
                 role="none"
                 className="image-container"
                 onMouseDown={(e) => {
@@ -93,6 +96,7 @@ export default function ImageCarousel({ URLS }) {
                 }}
               >
                 <div
+                  draggable={false}
                   style={{
                     height: "100%",
                     width: "100%",

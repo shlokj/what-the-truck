@@ -118,7 +118,7 @@ export default function FoodtruckPage() {
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
       <Header />
       {imageurls.length > 0 ? (
-        <div style={{ width: "30%", height: "30%" }}>
+        <div draggable={false} style={{ width: "30%", height: "30%" }}>
           <ImageCarousel URLS={imageurls} />
         </div>
       ) : (
