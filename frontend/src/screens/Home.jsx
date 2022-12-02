@@ -283,12 +283,43 @@ export default function Home() {
         jsonRating.push(orderedTrucks);
       });
     });
-    console.log(jsonRating);
+    console.log(jsonRating[2]);
   }
 
   if (sort === "rating") {
     getAverageRating();
   }
+
+  async function getTodayTrucks() {
+    let lunchTrucks = [];
+    let dinnerTrucks = [];
+    let extendedTrucks = [];
+    const colRef = collection(db, "Trucks");
+    const docsSnap = await getDocs(colRef);
+    docsSnap.forEach((doc) => {
+      let time = doc.data().Time;
+      if (time != "") {
+        if (time == "Lunch") {
+          lunchTrucks.push(doc.data().Name);
+        } else if (time == "Dinner") {
+          dinnerTrucks.push(doc.data().Name);
+        } else if (time == "Extended Dinner") {
+          extendedTrucks.push(doc.data().Name);
+        } else if (time == "Lunch/Dinner") {
+          lunchTrucks.push(doc.data().Name);
+          dinnerTrucks.push(doc.data().Name);
+        } else if (time == "Dinner/Extended") {
+          dinnerTrucks.push(doc.data().Name);
+          extendedTrucks.push(doc.data().Name);
+        }
+      }
+    });
+    console.log(lunchTrucks);
+    console.log(dinnerTrucks);
+    console.log(extendedTrucks);
+  }
+
+  getTodayTrucks();
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-3">

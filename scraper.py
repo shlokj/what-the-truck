@@ -96,6 +96,8 @@ def correctList(x):
         for j in i:
             if j.isalnum():
                 fb_id+=j
+        if fb_id=='stopbyecafé':
+            fb_id='stopbyecafe'
         z.append(fb_id)
 
     
@@ -152,10 +154,16 @@ docs = db.collection('Trucks').get()
 for doc in docs:
     key = doc.id
     if key in lunchTrucks:
+        if key in dinnerTrucks:
+            db.collection(u'Trucks').document(key).update({'Time':"Lunch/Dinner"})
+            continue
         db.collection(u'Trucks').document(key).update({'Time':"Lunch"})
-    elif key in dinnerTrucks:
+    elif key in dinnerTrucks and key not in lunchTrucks:
+        if key in extendedTrucks:
+            db.collection(u'Trucks').document(key).update({'Time':"Dinner/Extended"})
+            continue
         db.collection(u'Trucks').document(key).update({'Time':"Dinner"})
-    elif key in extendedTrucks:
+    elif key in extendedTrucks and key not in dinnerTrucks:
         db.collection(u'Trucks').document(key).update({'Time':"Extended Dinner"})
 # for i in list(desc.keys()):
 #     j = i.replace(" ","")
