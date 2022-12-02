@@ -151,6 +151,20 @@ db = firestore.client()
 
 docs = db.collection('Trucks').get()
 
+
+#delete yesterday's trucks
+for doc in docs:
+    doc_ref = db.collection(u'Trucks').document(doc.id)
+
+    doc = doc_ref.get()
+    if doc.exists:
+        data = doc.to_dict()
+        time = data['Time']
+        if time in ["Lunch","Dinner","Lunch/Dinner","Dinner/Extended","Extended Dinner"]:
+            db.collection(u'Trucks').document(doc.id).update({'Time':""})
+
+
+#get today's trucks
 for doc in docs:
     key = doc.id
     if key in lunchTrucks:
@@ -165,6 +179,11 @@ for doc in docs:
         db.collection(u'Trucks').document(key).update({'Time':"Dinner"})
     elif key in extendedTrucks and key not in dinnerTrucks:
         db.collection(u'Trucks').document(key).update({'Time':"Extended Dinner"})
+
+
+
+
+
 # for i in list(desc.keys()):
 #     j = i.replace(" ","")
 #     k = j.replace("'","")
