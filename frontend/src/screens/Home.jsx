@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { db } from "..";
+import { collection, doc, getDocs, getDoc } from "firebase/firestore";
+
 import {
   Button,
   FormControl,
@@ -166,6 +169,42 @@ export default function Home() {
   );
 
   console.log(sort, decreasing);
+
+  async function getReviews(foodTruckName) {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+    const reviews = await getDocs(colRef);
+    const allReviews = [];
+    reviews.forEach((doc) => {
+      if (doc.data().rating!==NaN){
+        allReviews.push(doc.data().rating);
+      }
+    });
+
+    const average = allReviews.reduce((a, b) => a + b, 0) / allReviews.length;
+    return average;
+  }
+
+  async function getAverageRating(){
+    let jsonRating=[];
+    const colRef = collection(db, "Trucks");
+    const docsSnap = await getDocs(colRef);
+    docsSnap.forEach(doc => {
+      let truckName = doc.id;
+      getReviews(truckName).then(function (result) {
+        let orderedTrucks = {};
+        let truckAvg = result;
+        orderedTrucks["truckName"]=truckName;
+        orderedTrucks["truckRating"]=truckAvg;
+        jsonRating.push(orderedTrucks);
+      });
+    })
+    console.log(jsonRating);
+  }
+
+  if(sort==="rating"){
+    getAverageRating();
+  }
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
