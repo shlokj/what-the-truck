@@ -28,10 +28,18 @@ export default function FoodtruckPage() {
   const [fbReviews, setFBReviews] = useState([]);
   const [truckName, setTruckName] = useState("");
   const [imageurls, setImageURLs] = useState([]);
+  const [averageRating, setRating] = useState(0);
   const navigate = useNavigate();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
     .toLowerCase();
+
+  async function getTruckRating() {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    return data.avgRating;
+  }
 
   async function getReviews() {
     const docRef = doc(db, "Trucks", foodTruckName);
@@ -77,6 +85,10 @@ export default function FoodtruckPage() {
     getImageURLs().then(function (imageurls) {
       setImageURLs(imageurls);
     });
+    getTruckRating().then(function (avgRating) {
+      setRating(avgRating);
+    });
+    getName().catch(console.error);
   }, []);
 
   const reviewDisplay = fbReviews
@@ -86,25 +98,6 @@ export default function FoodtruckPage() {
         review.user.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => (best ? -1 : 1) * (a.rating - b.rating));
-
-  async function getTruckDescription() {
-    const docRef = doc(db, "Trucks", foodTruckName);
-    try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        return docSnap.data().Description;
-      } else {
-        console.log("Document does not exist");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  var desc = getTruckDescription().then(function (result) {
-    let truckDescription = result;
-    // console.log(truckDescription);
-  });
 
   async function getName() {
     const docRef = doc(db, "Trucks", foodTruckName);
@@ -120,15 +113,6 @@ export default function FoodtruckPage() {
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    getName().catch(console.error);
-  }, []);
-
-  var desc = getName().then(function (result) {
-    let truckName = result;
-    // console.log(truckName);
-  });
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
@@ -153,7 +137,7 @@ export default function FoodtruckPage() {
             <div>
               <h3 className="text-light">Average Rating:</h3>
             </div>
-            <Rating value={4} precision={0.5} readOnly />
+            <Rating value={averageRating ?? 0} precision={0.5} readOnly />
           </div>
         </div>
         <div
