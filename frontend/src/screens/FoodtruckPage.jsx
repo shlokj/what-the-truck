@@ -53,7 +53,6 @@ export default function FoodtruckPage() {
         allReviews.push(reviewObj);
       }
     });
-    // console.log(allReviews);
     return allReviews;
   }
 
@@ -76,7 +75,6 @@ export default function FoodtruckPage() {
       setFBReviews(fbReviews);
     });
     getImageURLs().then(function (imageurls) {
-      console.log(imageurls);
       setImageURLs(imageurls);
     });
   }, []);

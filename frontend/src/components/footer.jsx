@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <div
       className="w-100 h-100 bg-primary text-white font-weight-bold
-       d-flex justify-content-around gap-3 py-3"
+       d-flex justify-content-around gap-3 pt-2 pb-1"
     >
       <div className="w-25 d-flex flex-column align-items-center">
         <h4>What The Truck</h4>
