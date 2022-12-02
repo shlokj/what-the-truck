@@ -298,23 +298,32 @@ export default function Home() {
   }
 
   async function getAverageRating() {
-    let jsonRating = [];
+    let truckNames = [];
+    let truckDescriptions = [];
+    let truckAvgRatings = [];
+    let truckNumReviews = [];
     const colRef = collection(db, "Trucks");
     const docsSnap = await getDocs(colRef);
     docsSnap.forEach((doc) => {
-      let truckName = doc.id;
-      getReviews(truckName).then(function (result) {
-        let orderedTrucks = {};
-        let truckAvg = result;
-        orderedTrucks["truckName"] = truckName;
-        orderedTrucks["truckRating"] = truckAvg;
-        jsonRating.push(orderedTrucks);
-      });
-    });
-  }
+      const data = doc.data();
+      truckNames.push(data.Name);
+      truckDescriptions.push(data.Description);
+      truckAvgRatings.push(data.avgRating);
+      truckNumReviews.push(data.numReviews);
 
-  if (sort === "rating") {
-    getAverageRating();
+      // let truckName = doc.id;
+      // getReviews(truckName).then(function (result) {
+      //   let orderedTrucks = {};
+      //   let truckAvg = result;
+      //   orderedTrucks["truckName"] = truckName;
+      //   orderedTrucks["truckRating"] = truckAvg;
+      //   jsonRating.push(orderedTrucks);
+      // });
+    });
+    console.log(truckNames);
+    console.log(truckDescriptions);
+    console.log(truckAvgRatings);
+    console.log(truckNumReviews);
   }
 
   async function getTodayTrucks() {
