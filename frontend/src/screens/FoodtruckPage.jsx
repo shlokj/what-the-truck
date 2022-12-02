@@ -118,15 +118,6 @@ export default function FoodtruckPage() {
       <div style={{ width: "30%", height: "30%" }}>
         <ImageCarousel />
       </div>
-      {/* <Box>
-        <Rating
-          name="half-rating-read"
-          value={value}
-          precision={0.5}
-          readOnly
-        />
-      </Box>
-      <h4>Today: Rieber 11 am- 2:30 pm, Sproul 9 pm - 12 am</h4> */}
       <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-5">
         <div
           className="d-flex justify-content-between align-items-center"
@@ -137,7 +128,7 @@ export default function FoodtruckPage() {
               className="p-0 fs-3 h-50"
               variant="outlined"
               onClick={() => {
-                navigate("/truck/:foodTruckName/review");
+                navigate("/truck/" + foodTruckName + "/review");
               }}
             >
               +
