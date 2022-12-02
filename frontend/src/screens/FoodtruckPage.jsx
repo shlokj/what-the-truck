@@ -25,6 +25,7 @@ export default function FoodtruckPage() {
   const [best, setBest] = useState(true);
   const [i, setI] = useState(0);
   const [fbReviews, setFBReviews] = useState([]);
+  const [imageurls, setImageURLs] = useState([]);
   const navigate = useNavigate();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -48,17 +49,33 @@ export default function FoodtruckPage() {
           rating: data.rating,
         };
         allReviews.push(reviewObj);
-        console.log(reviewObj);
       }
-      console.log(allReviews);
     });
-
+    // console.log(allReviews);
     return allReviews;
+  }
+
+  async function getImageURLs() {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+    const reviews = await getDocs(colRef);
+    const imageURLs = [];
+    reviews.forEach((doc) => {
+      const data = doc.data();
+      if (data.reviewImage != null) {
+        imageURLs.push(data.reviewImage);
+      }
+    });
+    return imageURLs;
   }
 
   useEffect(() => {
     getReviews().then(function (fbReviews) {
       setFBReviews(fbReviews);
+    });
+    getImageURLs().then(function (imageurls) {
+      console.log(imageurls);
+      setImageURLs(imageurls);
     });
   }, []);
 
@@ -86,7 +103,7 @@ export default function FoodtruckPage() {
 
   var desc = getTruckDescription().then(function (result) {
     let truckDescription = result;
-    console.log(truckDescription);
+    // console.log(truckDescription);
   });
 
   async function getName() {
@@ -105,7 +122,7 @@ export default function FoodtruckPage() {
 
   var desc = getName().then(function (result) {
     let truckName = result;
-    console.log(truckName);
+    // console.log(truckName);
   });
 
   return (
