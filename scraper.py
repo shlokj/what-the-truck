@@ -47,92 +47,99 @@ desc = {"Cafe Vietnam": '''A rotating crop of seasonal items (like egg rolls, fr
 
 
 
-# table = pd.read_html('https://menu.dining.ucla.edu/hours/')
+table = pd.read_html('https://menu.dining.ucla.edu/hours/')
 
-# match = r"[^59\-\.]"
+match = r"[^59\-\.]"
 
-# df = table[0]
+df = table[0]
 
-# lunchTrucks = []
-# dinnerTrucks = []
-# extendedTrucks = []
+lunchTrucks = []
+dinnerTrucks = []
+extendedTrucks = []
 
 
-# mealTimes = ['Lunch/Brunch','Dinner','Extended Dinner']
+mealTimes = ['Lunch/Brunch','Dinner','Extended Dinner']
 
-# #modify scraped list
-# def correctList(x):
+#modify scraped list
+def correctList(x):
     
-#     for i in x:
+    for i in x:
 
-#         j = 0
+        j = 0
 
-#         while j < len(i):
-#             if j <= len(i)-2:
-#                 if i[j]==' ' and i[j+1]==' ':
+        while j < len(i):
+            if j <= len(i)-2:
+                if i[j]==' ' and i[j+1]==' ':
 
-#                     newEl = i[j+2:len(i)]
+                    newEl = i[j+2:len(i)]
 
-#                     modEl = i[0:j]
-#                     x.append(modEl)
-#                     x.append(newEl)
-#             j+=1
+                    modEl = i[0:j]
+                    x.append(modEl)
+                    x.append(newEl)
+            j+=1
     
-#     y = []
-#     for i in x:
-#         if "  " in i or i=='':
-#             continue
-#         else:
-#             y.append(i)
+    y = []
+    for i in x:
+        if "  " in i or i=='':
+            continue
+        else:
+            y.append(i)
 
-#     for i in y:
-#         if i == ' Hours':
-#             y.remove(i)
+    for i in y:
+        if i == ' Hours':
+            y.remove(i)
+
+    z=[]
+    for i in y:
+        i=i.lower()
+        fb_id = ''
+        for j in i:
+            if j.isalnum():
+                fb_id+=j
+        z.append(fb_id)
+
     
-#     return y
+    return z
 
 
-# def getTrucksForTime(mealTime,pattern,arr):
+def getTrucksForTime(mealTime,pattern,arr):
 
-#   for j in range(9,11):
+  for j in range(9,11):
 
-#         x = df.loc[j][mealTime]
+        x = df.loc[j][mealTime]
 
-#         y = re.findall(pattern,x)
+        y = re.findall(pattern,x)
 
-#         z = (y[10::])
+        z = (y[10::])
 
-#         exTrucks = ""
+        exTrucks = ""
 
-#         for k in z:
-#             exTrucks+=k
+        for k in z:
+            exTrucks+=k
     
-#         arr.append(exTrucks)
+        arr.append(exTrucks)
 
 
-# for i in mealTimes:
+for i in mealTimes:
     
-#     if i == "Lunch/Brunch":
-#         getTrucksForTime(i,r"[^113\-\.]",lunchTrucks)
+    if i == "Lunch/Brunch":
+        getTrucksForTime(i,r"[^113\-\.]",lunchTrucks)
     
-#     elif i == "Dinner":
-#         getTrucksForTime(i,r"[^59\-\.]",dinnerTrucks)
+    elif i == "Dinner":
+        getTrucksForTime(i,r"[^59\-\.]",dinnerTrucks)
       
-#     elif i == "Extended Dinner":
-#         getTrucksForTime(i,r"[^912\-\.]",extendedTrucks)
+    elif i == "Extended Dinner":
+        getTrucksForTime(i,r"[^912\-\.]",extendedTrucks)
     
 
 
-# lunchTrucks=correctList(lunchTrucks)
-# dinnerTrucks=correctList(dinnerTrucks)
-# extendedTrucks=correctList(extendedTrucks)
+lunchTrucks=correctList(lunchTrucks)
+dinnerTrucks=correctList(dinnerTrucks)
+extendedTrucks=correctList(extendedTrucks)
 
-# print(lunchTrucks)
-# print(dinnerTrucks)
-
-# print(extendedTrucks)
-
-
+print(lunchTrucks)
+print(dinnerTrucks)
+print(extendedTrucks)
 
 
 #firebase connection
@@ -144,12 +151,16 @@ docs = db.collection('Trucks').get()
 
 for doc in docs:
     key = doc.id
-    db.collection('Trucks').document(key).delete()
-
-for i in list(desc.keys()):
-    j = i.replace(" ","")
-    k = j.replace("'","")
-    db.collection(u'Trucks').document(f'{k.lower()}').set({'Name': i, 'Time': '', 'Description': desc[i]})
+    if key in lunchTrucks:
+        db.collection(u'Trucks').document(key).update({'Time':"Lunch"})
+    elif key in dinnerTrucks:
+        db.collection(u'Trucks').document(key).update({'Time':"Dinner"})
+    elif key in extendedTrucks:
+        db.collection(u'Trucks').document(key).update({'Time':"Extended Dinner"})
+# for i in list(desc.keys()):
+#     j = i.replace(" ","")
+#     k = j.replace("'","")
+#     db.collection(u'Trucks').document(f'{k.lower()}').set({'Name': i, 'Time': '', 'Description': desc[i]})
 
 
 
