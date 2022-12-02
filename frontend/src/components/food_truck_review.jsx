@@ -154,9 +154,11 @@ export default function ReviewInput() {
                 numReviews: numReviews + 1,
               });
             });
-            setUploading(false);
-            setReviewText("");
-            navigate(-1);
+            setTimeout(function () {
+              setUploading(false);
+              setReviewText("");
+              navigate(-1);
+            }, 1000);
           })
           .catch((err) => {
             console.error("Error creating document", err);
