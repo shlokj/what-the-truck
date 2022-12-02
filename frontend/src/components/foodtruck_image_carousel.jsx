@@ -3,7 +3,7 @@ import "./slider.scss";
 
 const SNAP_DIST = 12.5;
 
-export default function ImageCarousel() {
+export default function ImageCarousel({ URLS }) {
   const [anchor, setAnchor] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [mousePos, setMouse] = useState(0);
@@ -26,8 +26,8 @@ export default function ImageCarousel() {
 
   const images = importImages(require.context("./pictures", false, /\.(jpg)$/));
   const maxIndex = Object.values(images).length - 1;
-  const [imageIndex, setIndex] = useState(Math.round(maxIndex / 2));
-  const [x, setX] = useState(25 - Math.round(maxIndex / 2) * 50);
+  const [imageIndex, setIndex] = useState(0);
+  const [x, setX] = useState(25);
 
   return (
     <div
@@ -64,19 +64,24 @@ export default function ImageCarousel() {
       }}
     >
       <div className="carousel-container">
-        {Object.values(images).map(
+        {URLS.map(
           (
-            item // create each slide
+            item,
+            i // create each slide
           ) => (
             <div
-              key={item}
+              key={i}
               className="slide"
               style={
                 dragging
                   ? { transition: "none", transform: `translateX(${x * 2}%)` }
-                  : { transition: "0.15s", transform: `translateX(${x * 2}%)` }
+                  : {
+                      transition: "0.15s",
+                      transform: `translateX(${x * 2}%)`,
+                    }
               }
             >
+              {console.log(item)}
               <div
                 role="none"
                 className="image-container"
