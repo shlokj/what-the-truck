@@ -33,6 +33,13 @@ export default function FoodtruckPage() {
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
     .toLowerCase();
 
+  async function getTruckRating() {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.data();
+    console.log(data.avgRating);
+  }
+
   async function getReviews() {
     const docRef = doc(db, "Trucks", foodTruckName);
     const colRef = collection(docRef, "Reviews");
