@@ -22,6 +22,8 @@ We strive to make our service a one-stop destination for everything UCLA food tr
 
 ## Running the App
 
+Perform the following actions on your terminal:
+
 ### Clone the repository
 
 `git clone https://github.com/shlokj/what-the-truck`
