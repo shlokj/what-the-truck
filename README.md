@@ -20,4 +20,32 @@ Recommend the best food trucks to eat at or criticize you didn't particularly en
 
 We strive to make our service a one-stop destination for everything UCLA food trucks. It periodically monitors UCLA's official dining page and tells you the highest-rated food trucks available today. You can even search for trucks serving cuisines you're looking for.
 
+## Running the App
+
+### Clone the repository
+
+`git clone https://github.com/shlokj/what-the-truck`
+
+Or, just download a zip directly through GitHub and extract it locally.
+
+### Enter the directory
+
+`cd what-the-truck`
+
+### Install the dependencies
+
+`npm i` or `npm install`
+
+FYI: We initially decided to build this app entirely on the MERN stack, which means we had the frontend and backend in separate folders. We modified the `package.json` so that the normal npm scripts would perform the necessary operations on both the backend and frontend. `npm i` actually installs dependencies in subfolders, not in the root.
+
+### Run the app
+
+`npm start`
+
+Similar to the previous FYI, this script has been modified.
+
+### Explore and enjoy!
+
+Create an account and join the Hill in critiquing food trucks!
+
 
