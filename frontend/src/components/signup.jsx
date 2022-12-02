@@ -10,7 +10,7 @@ import {
 import ReactDOM from "react-dom/client";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, setDoc, doc } from "firebase/firestore";
 import { db } from "..";
 
 const styles = {
@@ -38,16 +38,12 @@ export default function SignUp({ handleChange }) {
 
     const data = {
       Email: email,
-      Password: password,
       Username: username,
     };
 
-    await addDoc(dbRef, data);
-
     await createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        // we are signed in
-
+      .then(async () => {
+        await setDoc(doc(dbRef, email), data);
         navigate("/");
       })
       .catch((error) => {

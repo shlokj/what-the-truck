@@ -19,7 +19,7 @@ import {
 import { ImageCarousel, ReviewsList, Footer } from "../components";
 import "bootstrap/dist/css/bootstrap.css";
 
-const DELTA = 4;
+const DELTA = 5;
 
 export default function FoodtruckPage() {
   const [search, setSearch] = useState("");
@@ -27,6 +27,7 @@ export default function FoodtruckPage() {
   const [i, setI] = useState(0);
   const [fbReviews, setFBReviews] = useState([]);
   const [truckName, setTruckName] = useState("");
+  const [imageurls, setImageURLs] = useState([]);
   const navigate = useNavigate();
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -41,22 +42,42 @@ export default function FoodtruckPage() {
       const data = doc.data();
       if (data != null && data.text != null && data.rating != null) {
         const reviewObj = {
-          user: "to be replaced",
+          user:
+            data.username ??
+            ["shlokj", "gupann", "skath", "ryankim", "sidsud"][
+              Math.floor(Math.random() * 5)
+            ],
           description: data.text,
           rating: data.rating,
         };
         allReviews.push(reviewObj);
-        console.log(reviewObj);
       }
-      console.log(allReviews);
     });
-
+    // console.log(allReviews);
     return allReviews;
+  }
+
+  async function getImageURLs() {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    const colRef = collection(docRef, "Reviews");
+    const reviews = await getDocs(colRef);
+    const imageURLs = [];
+    reviews.forEach((doc) => {
+      const data = doc.data();
+      if (data.reviewImage != null) {
+        imageURLs.push(data.reviewImage);
+      }
+    });
+    return imageURLs;
   }
 
   useEffect(() => {
     getReviews().then(function (fbReviews) {
       setFBReviews(fbReviews);
+    });
+    getImageURLs().then(function (imageurls) {
+      console.log(imageurls);
+      setImageURLs(imageurls);
     });
   }, []);
 
@@ -84,7 +105,7 @@ export default function FoodtruckPage() {
 
   var desc = getTruckDescription().then(function (result) {
     let truckDescription = result;
-    console.log(truckDescription);
+    // console.log(truckDescription);
   });
 
   async function getName() {
@@ -105,6 +126,11 @@ export default function FoodtruckPage() {
   useEffect(() => {
     getName().catch(console.error);
   }, []);
+  
+  var desc = getName().then(function (result) {
+    let truckName = result;
+    // console.log(truckName);
+  });
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
@@ -113,7 +139,7 @@ export default function FoodtruckPage() {
         <img
           height="450px"
           style={{ borderRadius: "16px" }}
-          src="../../creamyboyslogo.jpeg"
+          src={"../food_truck_logos/" + foodTruckName + ".jpeg"}
           alt="creamy boys logo"
         />
       </div> */}
