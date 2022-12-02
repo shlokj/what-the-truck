@@ -111,7 +111,7 @@ export default function FoodtruckPage() {
         <img
           height="450px"
           style={{ borderRadius: "16px" }}
-          src="../../creamyboyslogo.jpeg"
+          src={"../food_truck_logos/" + foodTruckName + ".jpeg"}
           alt="creamy boys logo"
         />
       </div>

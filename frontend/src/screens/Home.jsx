@@ -56,25 +56,27 @@ export default function Home() {
 
   const imagePaths = {
     "Cafe Vietnam": "../../food_truck_logos/cafevietnam.jpeg",
-    "Kalamaki Greek Street Food": "../../food_truck_logos/kalamaki.jpeg",
+    "Kalamaki Greek Street Food":
+      "../../food_truck_logos/kalamakigreekstreetfood.jpeg",
     "Paradise Cookies & Ice Cream":
-      "../../food_truck_logos/paradisecookiesandcream.jpeg",
+      "../../food_truck_logos/paradisecookiesicecream.jpeg",
     Perro: "../../food_truck_logos/perro.jpeg",
     "Philly Jays Steaks": "../../food_truck_logos/phillyjayssteaks.jpeg",
     "Savage Tacos": "../../food_truck_logos/savagetacos.jpeg",
     "Smile Hotdog": "../../food_truck_logos/smilehotdog.jpeg",
-    "Sweets on Wheels": "../../food_truck_logos/sweetsonwheels.jpg",
+    "Sweets on Wheels": "../../food_truck_logos/sweetsonwheels.jpeg",
     "ThaiMex Cocina": "../../food_truck_logos/thaimexcocina.jpeg",
-    "The Bollywood Kitchen": "../../food_truck_logos/thebollywoodkitchen.jpg",
+    "The Bollywood Kitchen": "../../food_truck_logos/thebollywoodkitchen.jpeg",
     "The Taco Cartel": "../../food_truck_logos/thetacocartel.jpeg",
     "Tokyo Style": "../../food_truck_logos/tokyostyle.jpeg",
     "Yunas Bob": "../../food_truck_logos/yunasbob.jpeg",
     "Creamy Boys": "../../food_truck_logos/creamyboys.jpeg",
     "Pinch of Flavor": "../../food_truck_logos/pinchofflavor.jpeg",
-    "Pacifico Charbroiled Fish": "../../food_truck_logos/pacifico.jpeg",
+    "Pacifico Charbroiled Fish":
+      "../../food_truck_logos/pacificocharbroiledfish.jpeg",
     Kogi: "../../food_truck_logos/kogi.jpeg",
-    "Dinas Dumpling": "../../food_truck_logos/dinasdumplings.jpeg",
-    Salpicon: "../../food_truck_logos/salpicon.png",
+    "Dinas Dumpling": "../../food_truck_logos/dinasdumpling.jpeg",
+    Salpicon: "../../food_truck_logos/salpicon.jpeg",
     "Original Herbivore": "../../food_truck_logos/originalherbivore.jpeg",
     "8E8 Thai Street Food": "../../food_truck_logos/8e8thaistreetfood.jpeg",
     "Babys Badass Burgers": "../../food_truck_logos/babysbadassburgers.jpeg",
@@ -176,7 +178,7 @@ export default function Home() {
     const reviews = await getDocs(colRef);
     const allReviews = [];
     reviews.forEach((doc) => {
-      if (doc.data().rating!==NaN){
+      if (doc.data().rating !== NaN) {
         allReviews.push(doc.data().rating);
       }
     });
@@ -185,24 +187,24 @@ export default function Home() {
     return average;
   }
 
-  async function getAverageRating(){
-    let jsonRating=[];
+  async function getAverageRating() {
+    let jsonRating = [];
     const colRef = collection(db, "Trucks");
     const docsSnap = await getDocs(colRef);
-    docsSnap.forEach(doc => {
+    docsSnap.forEach((doc) => {
       let truckName = doc.id;
       getReviews(truckName).then(function (result) {
         let orderedTrucks = {};
         let truckAvg = result;
-        orderedTrucks["truckName"]=truckName;
-        orderedTrucks["truckRating"]=truckAvg;
+        orderedTrucks["truckName"] = truckName;
+        orderedTrucks["truckRating"] = truckAvg;
         jsonRating.push(orderedTrucks);
       });
-    })
+    });
     console.log(jsonRating);
   }
 
-  if(sort==="rating"){
+  if (sort === "rating") {
     getAverageRating();
   }
 
