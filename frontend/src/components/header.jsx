@@ -11,13 +11,13 @@ export default function Header() {
 
   return (
     <div
-      className="bg-primary text-white w-100 font-weight-bold
-       d-flex flex-column justify-content-between align-items-center gap-2 py-4 px-3"
+      className="bg-primary bg-opacity-75 text-white w-100 font-weight-bold
+       d-flex flex-column justify-content-between rounded-bottom align-items-center gap-2 py-4 px-3"
     >
       <div className="w-100 d-flex justify-content-around">
         <div className="d-flex justify-content-between align-items-center gap-2">
           <div style={fontstyle} className="d-flex flex-row me-2">
-            <h1> What The Truck</h1>
+            <h1> <strong>what the tr*ck</strong></h1>
           </div>
           <div>
             <svg
@@ -43,8 +43,8 @@ export default function Header() {
           Logout
         </Button>
       </div>
-      <div className="border-top border-light pt-3 px-5" style={fontstyle}>
-        <h4>the hub for ucla food truck reviews</h4>
+      <div className="border-top bg-white text-dark border-light pt-2 px-3 mt-3 rounded-5" style={fontstyle}>
+        <h5>the hub for ucla food truck reviews</h5>
       </div>
     </div>
   );

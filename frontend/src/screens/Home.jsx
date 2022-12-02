@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { FoodTruckCard, Footer } from "../components";
 import Header from "../components/header";
 
-const DELTA = 5;
+const DELTA = 6;
 
 export default function Home() {
   const placeholderTrucks = [
@@ -172,7 +172,8 @@ export default function Home() {
       <Header></Header>
 
       <div className="w-75 d-flex flex-column align-items-center p-2 gap-4">
-        <div className="h-100 w-75 d-flex justify-content-between align-items-center">
+        <div className="h-100 w-100 bg-warning bg-opacity-100 d-flex rounded-4 
+        justify-content-between align-items-center px-4 py-2">
           <div className="h-100 d-flex gap-1 align-items-center">
             <Button
               variant="outlined"
@@ -198,7 +199,7 @@ export default function Home() {
             >
               {`>`}
             </Button>
-            <div className="ms-2 text-secondary">
+            <div className="ms-2 text-dark">
               ({Math.min(i + 1, display.length)} -{" "}
               {Math.min(i + DELTA, display.length)})
             </div>
@@ -206,10 +207,10 @@ export default function Home() {
 
           <div className="d-flex h-75 justify-content-end align-items-center gap-3">
             <div className="h-100 d-flex align-items-center justify-content-center">
-              <FormControl className="h-100 d-flex align-items-center justify-content-center">
+              <FormControl className="h-100 text-dark d-flex align-items-center justify-content-center">
                 <OutlinedInput
                   placeholder="Search"
-                  className="h-100"
+                  className="h-100 text-dark"
                   onChange={(e) => {
                     setSearch(e.target.value);
                     setI(0);
@@ -304,7 +305,7 @@ export default function Home() {
 
         {popup ? (
           <div
-            className="position-absolute align-self-end mt-5
+            className="position-absolute bg-white align-self-end mt-5
              p-4 d-flex flex-column align-items-center justify-content-between
               gap-2 border border-primary rounded rounded-3"
             style={{ left: "80%" }}

@@ -107,10 +107,10 @@ export default function FoodtruckPage() {
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
       <Header />
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center py-4 ">
         <img
-          height="450px"
-          style={{ borderRadius: "16px" }}
+          height="350px"
+          style={{ borderRadius: "20px" }}
           src="../../creamyboyslogo.jpeg"
           alt="creamy boys logo"
         />
@@ -127,11 +127,16 @@ export default function FoodtruckPage() {
         />
       </Box>
       <h4>Today: Rieber 11 am- 2:30 pm, Sproul 9 pm - 12 am</h4> */}
-      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-5">
+      <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4">
+          <div className="pt-3" >
+              <h1>Reviews</h1>
+          </div>
         <div
-          className="d-flex justify-content-between align-items-center"
+          className="d-flex bg-warning bg-opacity-75 rounded-5 justify-content-between align-items-center px-5 py-4"
           style={{ width: "90%" }}
         >
+
+          
           <div className="h-50 d-flex justify-content-between align-items-center gap-2">
             <Button
               className="p-0 fs-3 h-50"
@@ -170,6 +175,7 @@ export default function FoodtruckPage() {
               ({Math.min(i + 1, reviewDisplay.length)} -{" "}
               {Math.min(i + DELTA, reviewDisplay.length)})
             </div>
+            
           </div>
           <div>
             <div className="h-75 d-flex justify-content-between gap-2 align-items-center">
@@ -212,7 +218,7 @@ export default function FoodtruckPage() {
             style={{ width: "85%" }}
           >
             <ReviewsList reviews={reviewDisplay.slice(i, i + DELTA)} />
-          </div>
+        </div>
         ) : (
           <div className="p-5" style={{ minHeight: "50vh" }}></div>
         )}
