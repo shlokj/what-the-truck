@@ -2,7 +2,7 @@ import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 import { storage } from "..";
@@ -61,15 +61,29 @@ const styles = {
 
 export default function ReviewInput() {
   const navigate = useNavigate();
-  const [uploadComplete, setUploadComplete] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const CHARACTER_LIMIT = 200;
 
   const [imageFile, setImageFile] = useState(null);
-  const [fileUploadPercent, setFileUploadPercent] = useState(0);
 
   const auth = getAuth();
+
+  async function getNumReviews() {
+    const docRef = doc(db, "Trucks", foodTruckName);
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data().numReviews;
+      } else {
+        console.log("Document does not exist");
+        return 0;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -91,12 +105,6 @@ export default function ReviewInput() {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setFileUploadPercent(percent);
-      },
       (error) => {
         console.log(error);
         alert("Failed to upload image. Please try again later.");
@@ -129,7 +137,13 @@ export default function ReviewInput() {
         })
           .then(() => {
             console.log("CREATED");
-            setUploadComplete(false);
+            getNumReviews().then(async function (result) {
+              const dbRef = collection(db, "Trucks");
+              await updateDoc(doc(dbRef, foodTruckName), {
+                numReviews: result + 1,
+              });
+            });
+            setUploading(false);
             setReviewText("");
             navigate(-1);
           })
@@ -145,7 +159,7 @@ export default function ReviewInput() {
     if (reviewText.length === 0 || rating === 0) {
       return;
     }
-    setUploadComplete(true);
+    setUploading(true);
     if (imageFile != null) {
       uploadImageAndAddReview();
     } else {
@@ -223,7 +237,7 @@ export default function ReviewInput() {
                   Submit Review
                 </Button>
               </div>
-              <div align="center">{uploadComplete && <CircularProgress />}</div>
+              <div align="center">{uploading && <CircularProgress />}</div>
             </div>
           </Stack>
         </Paper>
