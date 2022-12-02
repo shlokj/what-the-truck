@@ -18,7 +18,7 @@ import {
 import { ImageCarousel, ReviewsList, Footer } from "../components";
 import "bootstrap/dist/css/bootstrap.css";
 
-const DELTA = 4;
+const DELTA = 5;
 
 export default function FoodtruckPage() {
   const [search, setSearch] = useState("");
@@ -39,7 +39,11 @@ export default function FoodtruckPage() {
       const data = doc.data();
       if (data != null && data.text != null && data.rating != null) {
         const reviewObj = {
-          user: "to be replaced",
+          user:
+            data.username ??
+            ["shlokj", "gupann", "skath", "ryankim", "sidsud"][
+              Math.floor(Math.random() * 5)
+            ],
           description: data.text,
           rating: data.rating,
         };
