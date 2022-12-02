@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { db } from "..";
 import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 
@@ -10,10 +10,13 @@ import {
   RadioGroup,
   FormControlLabel,
   Checkbox,
+  IconButton,
 } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.css";
 import { FoodTruckCard, Footer } from "../components";
 import Header from "../components/header";
+
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const DELTA = 5;
 
@@ -238,21 +241,48 @@ export default function Home() {
   const [popup, setPopup] = useState(false);
   const [sort, setSort] = useState("rating");
   const [decreasing, setDecreasing] = useState(true);
-  const display = placeholderTrucks
-    .filter(
-      (title) =>
-        title.toLowerCase().includes(search.toLowerCase()) ||
-        descriptions[title].toLowerCase().includes(search.toLowerCase())
-    )
-    .sort((a, b) =>
-      sort === "rating"
-        ? decreasing
-          ? ratings[b] - ratings[a]
-          : ratings[a] - ratings[b]
-        : decreasing
-        ? numberOfReviews[b] - numberOfReviews[a]
-        : numberOfReviews[a] - numberOfReviews[b]
+  const [lunchTrucks, setLunchTrucks] = useState([]);
+  const [dinnerTrucks, setDinnerTrucks] = useState([]);
+  const [extendedTrucks, setExtendedTrucks] = useState([]);
+  const [lunch, setLunch] = useState(false);
+  const [dinner, setDinner] = useState(false);
+  const [extended, setExtended] = useState(false);
+
+  const filteredSearch = placeholderTrucks.filter(
+    (title) =>
+      title.toLowerCase().includes(search.toLowerCase()) ||
+      descriptions[title].toLowerCase().includes(search.toLowerCase())
+  );
+
+  let todaysTrucks = [];
+  if (lunch || dinner || extended) {
+    if (lunch) {
+      todaysTrucks = todaysTrucks.concat(lunchTrucks);
+    }
+    if (dinner) {
+      todaysTrucks = todaysTrucks.concat(dinnerTrucks);
+    }
+    if (extended) {
+      todaysTrucks = todaysTrucks.concat(extendedTrucks);
+    }
+  }
+
+  var filteredResults = filteredSearch;
+  if (todaysTrucks.length > 0) {
+    filteredResults = filteredSearch.filter((title) =>
+      todaysTrucks.includes(title)
     );
+  }
+
+  const display = filteredResults.sort((a, b) =>
+    sort === "rating"
+      ? decreasing
+        ? ratings[b] - ratings[a]
+        : ratings[a] - ratings[b]
+      : decreasing
+      ? numberOfReviews[b] - numberOfReviews[a]
+      : numberOfReviews[a] - numberOfReviews[b]
+  );
 
   async function getReviews(foodTruckName) {
     const docRef = doc(db, "Trucks", foodTruckName);
@@ -283,7 +313,6 @@ export default function Home() {
         jsonRating.push(orderedTrucks);
       });
     });
-    console.log(jsonRating[2]);
   }
 
   if (sort === "rating") {
@@ -298,28 +327,33 @@ export default function Home() {
     const docsSnap = await getDocs(colRef);
     docsSnap.forEach((doc) => {
       let time = doc.data().Time;
-      if (time != "") {
-        if (time == "Lunch") {
+      if (time !== "") {
+        if (time === "Lunch") {
           lunchTrucks.push(doc.data().Name);
-        } else if (time == "Dinner") {
+        } else if (time === "Dinner") {
           dinnerTrucks.push(doc.data().Name);
-        } else if (time == "Extended Dinner") {
+        } else if (time === "Extended Dinner") {
           extendedTrucks.push(doc.data().Name);
-        } else if (time == "Lunch/Dinner") {
+        } else if (time === "Lunch/Dinner") {
           lunchTrucks.push(doc.data().Name);
           dinnerTrucks.push(doc.data().Name);
-        } else if (time == "Dinner/Extended") {
+        } else if (time === "Dinner/Extended") {
           dinnerTrucks.push(doc.data().Name);
           extendedTrucks.push(doc.data().Name);
         }
       }
     });
-    console.log(lunchTrucks);
-    console.log(dinnerTrucks);
-    console.log(extendedTrucks);
+
+    return [lunchTrucks, dinnerTrucks, extendedTrucks];
   }
 
-  getTodayTrucks();
+  useEffect(() => {
+    getTodayTrucks().then(function (trucks) {
+      setLunchTrucks(trucks[0]);
+      setDinnerTrucks(trucks[1]);
+      setExtendedTrucks(trucks[2]);
+    });
+  }, []);
 
   return (
     <div className="w-100 vh-100 d-flex flex-column align-items-center gap-3">
@@ -371,15 +405,16 @@ export default function Home() {
                 />
               </FormControl>
             </div>
-            <Button
+            <IconButton
+              color="primary"
               variant="outlined"
-              className="h-100 text-primary border-primary"
+              className="border border-primary rounded rounded-1"
               onClick={() => {
                 setPopup(!popup);
               }}
             >
-              Sort
-            </Button>
+              <FilterListIcon />
+            </IconButton>
           </div>
         </div>
 
@@ -387,7 +422,6 @@ export default function Home() {
           <div className="min-h-100 w-75 d-flex flex-column justify-content-between gap-4">
             {display.slice(i, i + DELTA).map((title) => (
               <div>
-                {console.log(ratings[title])}
                 <FoodTruckCard
                   name={title}
                   text={descriptions[title]}
@@ -447,24 +481,25 @@ export default function Home() {
                 />
               </FormControl>
             </div>
-            <Button
+            <IconButton
+              color="primary"
               variant="outlined"
-              className="h-100 text-primary border-primary"
+              className="border border-primary rounded rounded-1"
               onClick={() => {
                 setPopup(!popup);
               }}
             >
-              Sort
-            </Button>
+              <FilterListIcon />
+            </IconButton>
           </div>
         </div>
 
         {popup ? (
           <div
-            className="position-absolute align-self-end mt-5
-             p-4 d-flex flex-column align-items-center justify-content-between
-              gap-2 border border-primary rounded rounded-3"
-            style={{ left: "80%" }}
+            className="position-absolute align-self-end
+              p-4 pt-2 pb-3 d-flex flex-column align-items-center justify-content-between
+              border border-primary rounded rounded-3"
+            style={{ left: "79.25%" }}
           >
             <FormControl>
               <RadioGroup defaultValue="rating" name="radio-buttons-group">
@@ -489,6 +524,27 @@ export default function Home() {
                   label="Decreasing Order"
                   onClick={(e) => {
                     setDecreasing(e.target.checked);
+                  }}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Today's Lunch"
+                  onClick={(e) => {
+                    setLunch(e.target.checked);
+                  }}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Today's Dinner"
+                  onClick={(e) => {
+                    setDinner(e.target.checked);
+                  }}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  label="Today's Extended Dinner"
+                  onClick={(e) => {
+                    setExtended(e.target.checked);
                   }}
                 />
               </RadioGroup>
