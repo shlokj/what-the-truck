@@ -16,8 +16,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import { FoodTruckCard, Footer } from "../components";
 import Header from "../components/header";
 
-import FilterListIcon from "@mui/icons-material/FilterList";
-
 const DELTA = 5;
 
 export default function Home() {
@@ -405,7 +403,7 @@ export default function Home() {
                 />
               </FormControl>
             </div>
-            <IconButton
+            <Button
               color="primary"
               variant="outlined"
               className="border border-primary rounded rounded-1"
@@ -413,8 +411,8 @@ export default function Home() {
                 setPopup(!popup);
               }}
             >
-              <FilterListIcon />
-            </IconButton>
+              Sort & Filter
+            </Button>
           </div>
         </div>
 
@@ -481,7 +479,7 @@ export default function Home() {
                 />
               </FormControl>
             </div>
-            <IconButton
+            <Button
               color="primary"
               variant="outlined"
               className="border border-primary rounded rounded-1"
@@ -489,8 +487,8 @@ export default function Home() {
                 setPopup(!popup);
               }}
             >
-              <FilterListIcon />
-            </IconButton>
+              Sort & Filter
+            </Button>
           </div>
         </div>
 
