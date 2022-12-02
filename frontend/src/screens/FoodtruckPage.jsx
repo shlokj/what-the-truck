@@ -159,7 +159,8 @@ export default function FoodtruckPage() {
             </Button>
             <div className="ms-2 text-secondary">
               ({Math.min(i + 1, reviewDisplay.length)} -{" "}
-              {Math.min(i + DELTA, reviewDisplay.length)})
+              {Math.min(i + DELTA, reviewDisplay.length)}) out of{" "}
+              {reviewDisplay.length}
             </div>
           </div>
           <div>

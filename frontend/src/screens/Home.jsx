@@ -54,6 +54,78 @@ export default function Home() {
     "Bison Burger",
   ];
 
+  const ratings = {
+    "Cafe Vietnam": 1,
+    "Kalamaki Greek Street Food": 2,
+    "Paradise Cookies & Ice Cream": 3,
+    Perro: 4,
+    "Philly Jays Steaks": 5,
+    "Savage Tacos": 1,
+    "Smile Hotdog": 2,
+    "Sweets on Wheels": 3,
+    "ThaiMex Cocina": 4,
+    "The Bollywood Kitchen": 5,
+    "The Taco Cartel": 1,
+    "Tokyo Style": 2,
+    "Yunas Bob": 3,
+    "Creamy Boys": 4,
+    "Pinch of Flavor": 5,
+    "Pacifico Charbroiled Fish": 1,
+    Kogi: 2,
+    "Dinas Dumpling": 3,
+    Salpicon: 3,
+    "Original Herbivore": 4,
+    "8E8 Thai Street Food": 5,
+    "Babys Badass Burgers": 1,
+    Wafl: 2,
+    "StopBye Cafe": 3,
+    "Cerda Vega Tacos": 4,
+    "Poutine Brothers": 5,
+    "Uncle Al's Barbeque": 1,
+    "Aloha Fridays": 2,
+    "Dulce Europa Shaved Ice": 3,
+    "Habibi Shack": 4,
+    "Flaming Grain": 5,
+    Yalla: 1,
+    "Bison Burger": 2,
+  };
+
+  const numberOfReviews = {
+    "Cafe Vietnam": 1,
+    "Kalamaki Greek Street Food": 2,
+    "Paradise Cookies & Ice Cream": 3,
+    Perro: 4,
+    "Philly Jays Steaks": 5,
+    "Savage Tacos": 1,
+    "Smile Hotdog": 2,
+    "Sweets on Wheels": 3,
+    "ThaiMex Cocina": 4,
+    "The Bollywood Kitchen": 5,
+    "The Taco Cartel": 1,
+    "Tokyo Style": 2,
+    "Yunas Bob": 3,
+    "Creamy Boys": 4,
+    "Pinch of Flavor": 5,
+    "Pacifico Charbroiled Fish": 1,
+    Kogi: 2,
+    "Dinas Dumpling": 3,
+    Salpicon: 3,
+    "Original Herbivore": 4,
+    "8E8 Thai Street Food": 5,
+    "Babys Badass Burgers": 1,
+    Wafl: 2,
+    "StopBye Cafe": 3,
+    "Cerda Vega Tacos": 4,
+    "Poutine Brothers": 5,
+    "Uncle Al's Barbeque": 1,
+    "Aloha Fridays": 2,
+    "Dulce Europa Shaved Ice": 3,
+    "Habibi Shack": 4,
+    "Flaming Grain": 5,
+    Yalla: 1,
+    "Bison Burger": 2,
+  };
+
   const imagePaths = {
     "Cafe Vietnam": "../../food_truck_logos/cafevietnam.jpeg",
     "Kalamaki Greek Street Food": "../../food_truck_logos/kalamaki.jpeg",
@@ -133,7 +205,7 @@ export default function Home() {
     "Original Herbivore":
       "In 2016, a Los Angeles vegan festival left the future owners of Original Herbivore disappointed. They found the food to be bland, and their dissatisfaction ran deep. As avid adherents of a meat-free lifestyle, they wanted to show the Golden State plants can do everything meat can do – and, at times, arguably better. They turned their letdown into an opportunity, however, by founding their very own food truck. Now, you can catch the Original Herbivore rolling around Long Beach and Los Angeles promoting a vegan diet via mouth-watering meat-free fare. ",
     "8E8 Thai Street Food":
-      "8E8 Thai Street Food is bringing Thai food to the streets of Los Angeles, CA in style. It iss a food truck, after all, and one that is sticking to traditional preparation methods and imported spices and seasonings to tantalize your tastebuds. Sure, it is easy enough to claim authenticity when it comes to exotic cuisines. But 8E8 Thai Street Food was founded by a descendant from a long line of Thai cooks, including parents that owned a food stall selling it in India.",
+      "8E8 Thai Street Food is bringing Thai food to the streets of Los Angeles, CA in style. It is a food truck, after all, and one that is sticking to traditional preparation methods and imported spices and seasonings to tantalize your tastebuds. Sure, it is easy enough to claim authenticity when it comes to exotic cuisines. But 8E8 Thai Street Food was founded by a descendant from a long line of Thai cooks, including parents that owned a food stall selling it in India.",
     "Babys Badass Burgers":
       'Babys Badass Burgers sprang from the imaginations and experiences of ex-New Yorker restaurateur Erica Cohen (pictured left) and celebrated event planner Lori Barbera (pictured right). Cohen launched her career in the restaurant world as one of the founding partners in the first of The ONE Groups many restaurants. Cohen, a passionate foodie and burgermeister at heart who had "been searching for the perfect, quintessential cheeseburger since [she] was a little girl," decided that in order to satiate her quest she would have to create her own flawless burger: the Simple Original Beauty on the BBB menu. Cohen is responsible for day to day opeartions, staffing and quality control and also manages and oversees all BBB franchisees.',
     Wafl: "Wafl truck is making its way through all of LA, taking their wonderfully tasty sweet & savory, crispy, crunchy waffle creations to the ravenous peeps on the streets. They are wheeling out a selection of waffle sandwiches that make for the perfect meal, breakfast, lunch, dinner, or dessert.",
@@ -164,11 +236,21 @@ export default function Home() {
   const [popup, setPopup] = useState(false);
   const [sort, setSort] = useState("rating");
   const [decreasing, setDecreasing] = useState(true);
-  const display = placeholderTrucks.filter((title) =>
-    title.toLowerCase().includes(search.toLowerCase())
-  );
-
-  console.log(sort, decreasing);
+  const display = placeholderTrucks
+    .filter(
+      (title) =>
+        title.toLowerCase().includes(search.toLowerCase()) ||
+        descriptions[title].toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) =>
+      sort === "rating"
+        ? decreasing
+          ? ratings[b] - ratings[a]
+          : ratings[a] - ratings[b]
+        : decreasing
+        ? numberOfReviews[b] - numberOfReviews[a]
+        : numberOfReviews[a] - numberOfReviews[b]
+    );
 
   async function getReviews(foodTruckName) {
     const docRef = doc(db, "Trucks", foodTruckName);
@@ -207,10 +289,10 @@ export default function Home() {
   }
 
   return (
-    <div className="w-100 vh-100 d-flex flex-column align-items-center gap-4">
+    <div className="w-100 vh-100 d-flex flex-column align-items-center gap-3">
       <Header></Header>
 
-      <div className="w-75 d-flex flex-column align-items-center p-2 gap-4">
+      <div className="w-75 d-flex flex-column align-items-center p-2 gap-3">
         <div className="h-100 w-75 d-flex justify-content-between align-items-center">
           <div className="h-100 d-flex gap-1 align-items-center">
             <Button
@@ -239,7 +321,7 @@ export default function Home() {
             </Button>
             <div className="ms-2 text-secondary">
               ({Math.min(i + 1, display.length)} -{" "}
-              {Math.min(i + DELTA, display.length)})
+              {Math.min(i + DELTA, display.length)}) out of {display.length}
             </div>
           </div>
 
@@ -272,10 +354,13 @@ export default function Home() {
           <div className="min-h-100 w-75 d-flex flex-column justify-content-between gap-4">
             {display.slice(i, i + DELTA).map((title) => (
               <div>
+                {console.log(ratings[title])}
                 <FoodTruckCard
                   name={title}
                   text={descriptions[title]}
                   imageURL={imagePaths[title]}
+                  rating={ratings[title]}
+                  numberOfReviews={numberOfReviews[title]}
                 />
               </div>
             ))}
