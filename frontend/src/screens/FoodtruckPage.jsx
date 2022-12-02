@@ -126,7 +126,7 @@ export default function FoodtruckPage() {
   useEffect(() => {
     getName().catch(console.error);
   }, []);
-  
+
   var desc = getName().then(function (result) {
     let truckName = result;
     // console.log(truckName);
@@ -135,24 +135,21 @@ export default function FoodtruckPage() {
   return (
     <div className="d-flex flex-column align-items-center justify-content-between gap-3">
       <Header />
-      {/* <div className="d-flex justify-content-center align-items-center">
-        <img
-          height="450px"
-          style={{ borderRadius: "16px" }}
-          src={"../food_truck_logos/" + foodTruckName + ".jpeg"}
-          alt="creamy boys logo"
-        />
-      </div> */}
-      <div style={{ width: "30%", height: "30%" }}>
-        <ImageCarousel />
-      </div>
+      {imageurls.length > 0 ? (
+        <div style={{ width: "30%", height: "30%" }}>
+          <ImageCarousel URLS={imageurls} />
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="d-flex w-75 flex-column align-items-center justify-content-between gap-4 py-3">
         <div
           style={{ width: "90%" }}
           className="d-flex align-items-center justify-content-between"
         >
           <div className="bg-primary py-2 px-3 rounded rounded-3 border border-2 border-dark">
-            <h3 className="text-light">{truckName} Reviews</h3>
+            <h3 className="text-light">{truckName}</h3>
           </div>
           <div className="d-flex align-items-center gap-2 bg-primary py-2 px-3 rounded rounded-3 border border-2 border-dark">
             <div>
