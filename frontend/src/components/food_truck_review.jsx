@@ -2,11 +2,12 @@ import { Stack, Button, Rating, TextField, Paper, Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { collection, addDoc, doc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "..";
 import { useParams } from "react-router-dom";
 import { storage } from "..";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const styles = {
   heading: {
@@ -68,7 +69,7 @@ export default function ReviewInput() {
   const [imageFile, setImageFile] = useState(null);
   const [fileUploadPercent, setFileUploadPercent] = useState(0);
 
-  // console.log(imageFile.name);
+  const auth = getAuth();
 
   const foodTruckName = useParams()
     .foodTruckName.replace(/[^A-Za-z0-9]/g, "")
@@ -109,40 +110,34 @@ export default function ReviewInput() {
     );
   }
 
-  let temp = "";
-
-  for (let i = 0; i < foodTruckName.length; i++) {
-    let ch = foodTruckName[i];
-    if (ch !== ch.toUpperCase()) {
-      temp += ch;
-    } else {
-      if (i !== 0) {
-        temp += " ";
-        temp += ch;
-      } else {
-        temp += ch;
-      }
-    }
-  }
-
   async function addReview(text, rating, reviewImage) {
     const docRef = doc(db, "Trucks", foodTruckName);
     const colRef = collection(docRef, "Reviews");
 
-    await addDoc(colRef, {
-      text,
-      rating,
-      reviewImage,
-    })
-      .then(() => {
-        console.log("CREATED");
-        setUploadComplete(false);
-        setReviewText("");
-        navigate(-1);
-      })
-      .catch((err) => {
-        console.error("Error creating document", err);
+    const userEmail = auth.currentUser.email;
+    let username = null;
+    if (userEmail != null) {
+      console.log(userEmail);
+      const docRef = doc(db, "Users", userEmail);
+      getDoc(docRef).then(async function (result) {
+        username = result.data().Username;
+        await addDoc(colRef, {
+          username,
+          text,
+          rating,
+          reviewImage,
+        })
+          .then(() => {
+            console.log("CREATED");
+            setUploadComplete(false);
+            setReviewText("");
+            navigate(-1);
+          })
+          .catch((err) => {
+            console.error("Error creating document", err);
+          });
       });
+    }
   }
 
   const handleSubmit = (e) => {
