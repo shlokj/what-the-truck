@@ -1,4 +1,6 @@
 # What the Truck
+<img width="268" alt="Screen_Shot_2022-12-02_at_9 46 55_PM-removebg-preview" src="https://user-images.githubusercontent.com/91845982/205426466-e80db1bd-e832-4a4f-b2c5-48b3cdecd31a.png">
+
 
 ## Overview
 
